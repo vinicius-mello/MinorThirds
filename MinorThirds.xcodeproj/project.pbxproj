@@ -7,12 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		813150B21B457B6900A39CC1 /* VirtualMidiSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 813150B11B457B6900A39CC1 /* VirtualMidiSource.m */; };
+		8174F4B61B4612BB00FF3B70 /* ChordTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8174F4B51B4612BB00FF3B70 /* ChordTable.swift */; };
+		8174F4B81B46142700FF3B70 /* UIColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8174F4B71B46142700FF3B70 /* UIColorHex.swift */; };
+		8174F4BA1B46D3E500FF3B70 /* MusicUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8174F4B91B46D3E500FF3B70 /* MusicUtil.swift */; };
 		81A8BA631B4452960069DB83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8BA621B4452960069DB83 /* AppDelegate.swift */; };
 		81A8BA651B4452960069DB83 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8BA641B4452960069DB83 /* ViewController.swift */; };
 		81A8BA681B4452960069DB83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A8BA661B4452960069DB83 /* Main.storyboard */; };
 		81A8BA6A1B4452960069DB83 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A8BA691B4452960069DB83 /* Images.xcassets */; };
-		81A8BA6D1B4452960069DB83 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81A8BA6B1B4452960069DB83 /* LaunchScreen.xib */; };
 		81A8BA791B4452960069DB83 /* MinorThirdsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8BA781B4452960069DB83 /* MinorThirdsTests.swift */; };
+		81E3BD1C1B4C6E7F00359B78 /* ConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E3BD1B1B4C6E7F00359B78 /* ConfigViewController.swift */; };
+		81E3BD1E1B4C7E9100359B78 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E3BD1D1B4C7E9100359B78 /* CoreMIDI.framework */; };
+		81E3BD201B4C7E9C00359B78 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E3BD1F1B4C7E9C00359B78 /* CoreAudioKit.framework */; };
+		81E496A61B4DF16A0073B483 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E496A51B4DF16A0073B483 /* RangeSlider.swift */; };
+		81E496A81B5156C40073B483 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E496A71B5156C40073B483 /* MasterViewController.swift */; };
+		81E496AA1B5158130073B483 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E496A91B5158130073B483 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,16 +35,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		813150B01B457B6900A39CC1 /* VirtualMidiSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualMidiSource.h; sourceTree = "<group>"; };
+		813150B11B457B6900A39CC1 /* VirtualMidiSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualMidiSource.m; sourceTree = "<group>"; };
+		813150B31B457B9700A39CC1 /* MinorThirds-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MinorThirds-Bridging-Header.h"; sourceTree = "<group>"; };
+		8174F4B51B4612BB00FF3B70 /* ChordTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChordTable.swift; sourceTree = "<group>"; };
+		8174F4B71B46142700FF3B70 /* UIColorHex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorHex.swift; sourceTree = "<group>"; };
+		8174F4B91B46D3E500FF3B70 /* MusicUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicUtil.swift; sourceTree = "<group>"; };
 		81A8BA5D1B4452960069DB83 /* MinorThirds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MinorThirds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A8BA611B4452960069DB83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81A8BA621B4452960069DB83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81A8BA641B4452960069DB83 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		81A8BA671B4452960069DB83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		81A8BA691B4452960069DB83 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		81A8BA6C1B4452960069DB83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		81A8BA721B4452960069DB83 /* MinorThirdsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MinorThirdsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A8BA771B4452960069DB83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81A8BA781B4452960069DB83 /* MinorThirdsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinorThirdsTests.swift; sourceTree = "<group>"; };
+		81E3BD1B1B4C6E7F00359B78 /* ConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigViewController.swift; sourceTree = "<group>"; };
+		81E3BD1D1B4C7E9100359B78 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		81E3BD1F1B4C7E9C00359B78 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		81E496A51B4DF16A0073B483 /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
+		81E496A71B5156C40073B483 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		81E496A91B5158130073B483 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +63,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81E3BD201B4C7E9C00359B78 /* CoreAudioKit.framework in Frameworks */,
+				81E3BD1E1B4C7E9100359B78 /* CoreMIDI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +81,8 @@
 		81A8BA541B4452960069DB83 = {
 			isa = PBXGroup;
 			children = (
+				81E3BD1F1B4C7E9C00359B78 /* CoreAudioKit.framework */,
+				81E3BD1D1B4C7E9100359B78 /* CoreMIDI.framework */,
 				81A8BA5F1B4452960069DB83 /* MinorThirds */,
 				81A8BA751B4452960069DB83 /* MinorThirdsTests */,
 				81A8BA5E1B4452960069DB83 /* Products */,
@@ -77,12 +101,21 @@
 		81A8BA5F1B4452960069DB83 /* MinorThirds */ = {
 			isa = PBXGroup;
 			children = (
+				813150B01B457B6900A39CC1 /* VirtualMidiSource.h */,
+				813150B11B457B6900A39CC1 /* VirtualMidiSource.m */,
 				81A8BA621B4452960069DB83 /* AppDelegate.swift */,
 				81A8BA641B4452960069DB83 /* ViewController.swift */,
 				81A8BA661B4452960069DB83 /* Main.storyboard */,
+				81E3BD1B1B4C6E7F00359B78 /* ConfigViewController.swift */,
 				81A8BA691B4452960069DB83 /* Images.xcassets */,
-				81A8BA6B1B4452960069DB83 /* LaunchScreen.xib */,
 				81A8BA601B4452960069DB83 /* Supporting Files */,
+				813150B31B457B9700A39CC1 /* MinorThirds-Bridging-Header.h */,
+				8174F4B51B4612BB00FF3B70 /* ChordTable.swift */,
+				8174F4B71B46142700FF3B70 /* UIColorHex.swift */,
+				8174F4B91B46D3E500FF3B70 /* MusicUtil.swift */,
+				81E496A51B4DF16A0073B483 /* RangeSlider.swift */,
+				81E496A71B5156C40073B483 /* MasterViewController.swift */,
+				81E496A91B5158130073B483 /* DetailViewController.swift */,
 			);
 			path = MinorThirds;
 			sourceTree = "<group>";
@@ -161,6 +194,7 @@
 				TargetAttributes = {
 					81A8BA5C1B4452960069DB83 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = PL9LWQQFTA;
 					};
 					81A8BA711B4452960069DB83 = {
 						CreatedOnToolsVersion = 6.3;
@@ -193,7 +227,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				81A8BA681B4452960069DB83 /* Main.storyboard in Resources */,
-				81A8BA6D1B4452960069DB83 /* LaunchScreen.xib in Resources */,
 				81A8BA6A1B4452960069DB83 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +247,14 @@
 			files = (
 				81A8BA651B4452960069DB83 /* ViewController.swift in Sources */,
 				81A8BA631B4452960069DB83 /* AppDelegate.swift in Sources */,
+				8174F4B81B46142700FF3B70 /* UIColorHex.swift in Sources */,
+				8174F4BA1B46D3E500FF3B70 /* MusicUtil.swift in Sources */,
+				81E496A61B4DF16A0073B483 /* RangeSlider.swift in Sources */,
+				81E496A81B5156C40073B483 /* MasterViewController.swift in Sources */,
+				81E3BD1C1B4C6E7F00359B78 /* ConfigViewController.swift in Sources */,
+				81E496AA1B5158130073B483 /* DetailViewController.swift in Sources */,
+				813150B21B457B6900A39CC1 /* VirtualMidiSource.m in Sources */,
+				8174F4B61B4612BB00FF3B70 /* ChordTable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,14 +283,6 @@
 				81A8BA671B4452960069DB83 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		81A8BA6B1B4452960069DB83 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				81A8BA6C1B4452960069DB83 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -342,9 +375,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = MinorThirds/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MinorThirds/MinorThirds-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -352,9 +389,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = MinorThirds/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MinorThirds/MinorThirds-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -411,6 +452,7 @@
 				81A8BA7E1B4452960069DB83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		81A8BA7F1B4452960069DB83 /* Build configuration list for PBXNativeTarget "MinorThirdsTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +461,7 @@
 				81A8BA811B4452960069DB83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
