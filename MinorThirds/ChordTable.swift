@@ -146,7 +146,8 @@ let Cmb6 = ChordType(name: "",
     symbol: "m(b6)", tones: [0,3,7,8])
 let Cm5 = ChordType(name: "",
     symbol: "m(5)", tones: [0,3,7])
-
+let C59 = ChordType(name: "",
+    symbol: "5(9)", tones: [0,7,14])
 
 let Cdimb13 = ChordType(name: "",
     symbol: "°(b13)", tones: [0,3,6,9,20])
@@ -171,7 +172,7 @@ let chordTypes : [ChordType] = [
     C7b5b9,C7b5a9,C47913,C47b9,
     C7b9a11,C7b9a1113,Cm7b59,Cm7b59,C7b9b13,C7a9a11,
     Cmb6,Cm5,
-    Cdimb13,Cdim7M,Cdim9,Cdim11]
+    Cdimb13,Cdim7M,Cdim9,Cdim11,C59]
 
 
 let positionTable : [String : (ChordType,Int)] = [
@@ -182,6 +183,14 @@ let positionTable : [String : (ChordType,Int)] = [
     "(0,0)(-1,3)(0,5)(-1,7)" : (CM,1),
     "(0,0)(-1,2)(0,3)(0,4)" : (CM,1),
     "(0,0)(0,3)(0,4)(-1,6)" : (CM,3),
+    "(0,0)(1,2)(2,3)(2,4)" : (CM,1),
+    "(0,0)(-2,3)(-1,4)(-1,5)" : (CM,1),
+    "(0,0)(0,1)(-1,3)(0,4)" : (CM,2),
+    "(0,0)(0,4)(-1,6)(0,7)" : (CM,2),
+    "(0,0)(1,0)(2,1)(2,2)" : (CM,1),
+    "(0,0)(1,4)(2,5)(2,6)" : (CM,1),
+    "(0,0)(2,2)(1,4)(2,5)" : (CM,2),
+    "(0,0)(2,1)(2,2)(1,4)" : (CM,3),
     
     "(0,0)(0,1)(1,2)(0,4)" : (Cm,0),
     "(0,0)(1,2)(0,4)(0,5)" : (Cm,0),
@@ -199,7 +208,7 @@ let positionTable : [String : (ChordType,Int)] = [
     "(0,0)(-1,2)(0,3)(0,5)" : (C7,1),
     "(0,0)(0,3)(0,5)(-1,6)" : (C7,3),
     "(0,0)(-1,1)(0,2)(0,3)" : (C7,1),
-
+    "(0,0)(0,1)(-1,2)(0,3)" : (C7,2),
     
     "(0,0)(1,1)(1,2)(2,3)" : (C7M,0),
     "(0,0)(2,3)(1,5)(1,6)" : (C7M,0),
@@ -286,15 +295,19 @@ let positionTable : [String : (ChordType,Int)] = [
     "(0,0)(1,1)(0,3)(0,4)" : (C6,0),
     "(0,0)(-1,3)(0,5)(-1,6)" : (C6,1),
     "(0,0)(-1,2)(0,3)(-1,5)" : (C6,1),
+    "(0,0)(0,3)(0,4)(1,5)" : (C6,0),
+    "(0,0)(1,2)(0,3)(1,5)" : (C6,0),
  //   "(0,0)(-1,6)(0,7)(-1,9)" : (C6,1),
 
     "(0,0)(0,1)(1,2)(0,3)" : (Cm6,0),
     "(0,0)(0,3)(0,5)(1,6)" : (Cm6,0),
+    "(0,0)(0,4)(0,5)(0,7)" : (Cm6,0),
 //    "(0,0)(0,5)(1,6)(0,7)" : (Cm6,0),
     "(0,0)(0,1)(0,3)(0,4)" : (Cm6,0),
     "(0,0)(0,3)(1,5)(0,6)" : (Cm6,1),
     "(0,0)(-1,2)(-1,3)(-1,5)" : (Cm6,1),
     "(0,0)(-1,1)(-1,2)(-1,3)" : (Cm6,2),
+    "(0,0)(0,3)(0,4)(0,5)" : (Cm6,0),
 //    "(0,0)(-1,5)(-1,6)(-1,7)" : (Cm6,2),
 
     
@@ -313,6 +326,7 @@ let positionTable : [String : (ChordType,Int)] = [
     "(0,0)(2,4)(1,5)(1,6)" : (C9,0),
     "(0,0)(1,1)(1,2)(2,4)" : (C9,0),
     "(0,0)(-1,2)(0,3)(1,6)" : (C9,1),
+    "(0,0)(-1,3)(0,5)(1,7)" : (C9,1),
 
     "(0,0)(0,1)(1,3)(1,4)" : (Cm7b9,0),
     "(0,0)(1,3)(1,4)(0,5)" : (Cm7b9,0),
@@ -372,6 +386,7 @@ let positionTable : [String : (ChordType,Int)] = [
     "(0,0)(-1,2)(-1,5)(-2,6)" : (Cm9,2),
     
     "(0,0)(2,1)(1,2)(0,4)" : (C4,0),
+    "(0,0)(1,2)(0,4)(2,5)" : (C4,0),
     "(0,0)(1,2)(0,4)(-1,6)" : (C4,0),
     "(0,0)(1,2)(2,5)(1,6)" : (C4,0),
     "(0,0)(-1,2)(0,4)(1,6)" : (C4,0),
@@ -426,7 +441,8 @@ let positionTable : [String : (ChordType,Int)] = [
     "(0,0)(1,1)(1,3)(0,5)(0,6)" : (C7a9a11,0),
     
     "(0,0)(0,1)(1,2)(-1,3)" : (Cmb6,0),
-    
+    "(0,0)(0,4)(0,5)(-1,7)" : (Cmb6,0),
+
     "(0,0)(0,1)(1,2)(-2,3)" : (Cm5,0),
     
     "(0,0)(0,3)(0,5)(0,6)(-1,7)" : (Cdimb13,0),
@@ -438,6 +454,8 @@ let positionTable : [String : (ChordType,Int)] = [
     "(0,0)(0,1)(0,3)(-1,5)(0,6)" : (Cdim9,0),
     
     "(0,0)(0,2)(0,3)(0,5)(-1,6)" : (Cdim11,0),
+    "(0,0)(1,2)(0,4)(-1,5)" : (C59,0),
+
 ]
 
 let incompletePositionTable : [String : (ChordType,Int,[(Int,Int)])] = [
@@ -493,13 +511,13 @@ class Position {
 var allPositions : [Position] = []
 
 func parseKeys(keys : String) -> [(Int,Int)] {
-    let woutlast = dropLast(keys)
-    let woutfirst = dropFirst(woutlast)
-    var akeys = woutfirst.componentsSeparatedByString(")(")
+    let woutlast = String(keys.characters.dropLast())
+    let woutfirst = String(woutlast.characters.dropFirst())
+    let akeys = woutfirst.componentsSeparatedByString(")(")
     var result : [(Int,Int)] = []
     for i in akeys {
         let p=i.componentsSeparatedByString(",")
-        let pa : (Int,Int) = (p[0].toInt()!,p[1].toInt()!)
+        let pa : (Int,Int) = (Int(p[0])!,Int(p[1])!)
         result.append(pa)
     }
     return result
@@ -512,6 +530,6 @@ func fillAllPositions() {
     for (k,t) in incompletePositionTable {
         allPositions.append(Position(chord: t.0, keys: parseKeys(k), extraKeys: t.2, root: t.1))
     }
-    allPositions.sort { $0.0.chord.symbol < $0.1.chord.symbol }
+    allPositions.sortInPlace { $0.0.chord.symbol < $0.1.chord.symbol }
 }
 

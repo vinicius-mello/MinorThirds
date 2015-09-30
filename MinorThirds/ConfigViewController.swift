@@ -36,13 +36,13 @@ class ConfigViewController: UIViewController {
         super.viewDidLoad()
         segHeight.selectedSegmentIndex = gridHeight-7
         segWidth.selectedSegmentIndex = gridWidth-10
-        segBaseNote.selectedSegmentIndex = find(baseNote,baseMidiNote)!
+        segBaseNote.selectedSegmentIndex = baseNote.indexOf(baseMidiNote)!
         view.addSubview(rangeVel)
         rangeVel.minimumValue = 0
         rangeVel.maximumValue = 127
         rangeVel.lowerValue = Double(minVel)
         rangeVel.upperValue = Double(maxVel)
-        segColorScheme.selectedSegmentIndex = find(clr,currentColorScheme)!
+        segColorScheme.selectedSegmentIndex = clr.indexOf(currentColorScheme)!
         switchIncompleteChords.on = fillIncompletePositions
         switchSustain.on = autoSustain
         segAccidental.selectedSegmentIndex = accidental

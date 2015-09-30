@@ -41,7 +41,7 @@ class DetailViewController: UIViewController {
         for k in position.keys {
             let g = keys[index]
             g.frame = CGRectMake(CGFloat(k.1)*size+size,  400-CGFloat(k.0)*size, size, size)
-            let m = midiNoteRelative(position.keys[position.root], k)
+            let m = midiNoteRelative(position.keys[position.root], key: k)
             g.string = midiToName(m)
             g.fontSize = 20
             
@@ -65,7 +65,7 @@ class DetailViewController: UIViewController {
         for k in position.extraKeys {
             let g = keys[index]
             g.frame = CGRectMake(CGFloat(k.1)*size+size,  400-CGFloat(k.0)*size, size, size)
-            let m = midiNoteRelative(position.keys[position.root], k)
+            let m = midiNoteRelative(position.keys[position.root], key: k)
             g.string = midiToName(m)+"\nauto"
             g.fontSize = 20
             if blackNote(m) {

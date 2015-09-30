@@ -9,7 +9,7 @@
 func noteName(note: Int) -> String {
     let notesFlat = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"]
     let notesSharp = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
-    let notesMixed = ["C","C#","D","Eb","E","F","F#","G","Ab","A","Bb","B"]
+    let notesMixed = ["C","C#","D","Eb","E","F","F#","G","G#","A","Bb","B"]
     switch accidental {
     case 0:
         return notesFlat[note % 12]
@@ -18,7 +18,7 @@ func noteName(note: Int) -> String {
     case 2:
         return notesMixed[note % 12]
     default:
-        println("Error noteName")
+        print("Error noteName")
     }
     return "err"
 }
@@ -78,7 +78,7 @@ func chordScale(chord : ChordType, numNotes : Int) -> [[Bool]] {
     if m<0 || n<m {
         return []
     }
-    let combos = combosOfLength(n,m)
+    let combos = combosOfLength(n,m: m)
     var scales : [[Bool]] = []
     var minTritones : Int = 100
     var minSemi : Int = 100

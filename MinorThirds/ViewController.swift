@@ -82,6 +82,7 @@ class ViewController: UIViewController {
     var currentChord : ChordType? = nil
     var currentRoot : Int = 0
     var currentBass : Int = 0
+    var bassNote : Int = 0
     var currentScale : [Bool] = allNotes
     var chordLabel : CATextLayer = CATextLayer()
     var pedalLabel : CALayer = CALayer()
@@ -164,9 +165,9 @@ class ViewController: UIViewController {
     
     func setupGrid() {
         var gi = [[CATextLayer]]()
-        for i in 0..<16 {
+        for _ in 0..<16 {
             var gj = [CATextLayer]()
-            for j in 0..<16 {
+            for _ in 0..<16 {
                 let g = CATextLayer()
                 self.view.layer.addSublayer(g)
                 gj.append(g)
@@ -316,11 +317,13 @@ class ViewController: UIViewController {
         midi.sendBytes([0x80|midiChannel,UInt8(m+transposition),0])
     }
     
+    
     func activateChord() {
-        let chordName = currentChord!.format(currentRoot, bass: currentBass)
+        let chordName = currentChord!.format(currentRoot, bass: currentBass )
         //println(chordName)
         chordLabelShadow.string = chordName
         chordLabel.string = chordName
+        
         pressPedal()
         //            println(currentScale)
         //            blockScaleNotes()
@@ -373,10 +376,10 @@ class ViewController: UIViewController {
     
     func identifyChord() -> Bool {
         var keys : [(Int,Int)] = []
-        for (t,k) in activeKeys {
+        for (_,k) in activeKeys {
             keys.append(k)
         }
-        keys.sort { $0.1 == $1.1 ? $0.0 < $1.0 : $0.1 < $1.1 }
+        keys.sortInPlace { $0.1 == $1.1 ? $0.0 < $1.0 : $0.1 < $1.1 }
         var strKeys : String = ""
         let bass = keys[0]
         if (keys[1].1-bass.1)>4 {
@@ -385,7 +388,7 @@ class ViewController: UIViewController {
         for k in keys {
             strKeys = strKeys+"(\(k.0-keys[0].0),\(k.1-keys[0].1))"
         }
-        println(strKeys)
+        print(strKeys)
         incompletePosition = false
         if fillIncompletePositions {
             if let incompleteChord = incompletePositionTable[strKeys] {
@@ -437,13 +440,13 @@ class ViewController: UIViewController {
         for i in 0..<gridHeight {
             for j in 0..<gridWidth {
                 let g=grid![i][j]
-                let m = midiNote(i,j)
+             //   let m = midiNote(i,j)
                 g.opacity = 1.0
             }
         }
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for t: NSObject in touches {
             let touch = t as? UITouch
             let pt = touch!.locationInView(self.view)
@@ -455,7 +458,7 @@ class ViewController: UIViewController {
         detectedChord()
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for t: NSObject in touches {
             let touch = t as? UITouch
             //let pt = touch!.locationInView(self.view)
@@ -474,7 +477,7 @@ class ViewController: UIViewController {
         }
     }
   
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         var flag = false
         for t: NSObject in touches {
             let touch = t as? UITouch
@@ -485,7 +488,7 @@ class ViewController: UIViewController {
                 activeKeys[touch!]=nil
                 releaseKey(ai,aj)
                 activeKeys[touch!]=(i,j)
-                pressKey(i,j,86)
+                pressKey(i,j,lastVel)
                 flag = true
             }
         }
@@ -494,9 +497,9 @@ class ViewController: UIViewController {
         }
     }
 
-    override func touchesCancelled(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         //println("CANCEL")
-        for t: NSObject in touches {
+        for t: NSObject in touches! {
             let touch = t as? UITouch
             //let pt = touch!.locationInView(self.view)
             let (i,j) = activeKeys[touch!]!

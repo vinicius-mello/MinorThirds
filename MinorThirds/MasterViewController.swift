@@ -59,11 +59,11 @@ class MasterViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
 
         // Configure the cell...
         let position = allPositions[indexPath.row]
-        cell.textLabel?.text = position.chord.format(60, bass: midiNoteRelative( position.keys[position.root], (0,0) ))
+        cell.textLabel?.text = position.chord.format(60, bass: midiNoteRelative( position.keys[position.root], key: (0,0) ))
         
         return cell
     }
