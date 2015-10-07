@@ -19,6 +19,7 @@ class ConfigViewController: UIViewController {
     @IBOutlet weak var segAccidental: UISegmentedControl!
     @IBOutlet weak var switchIncompleteChords: UISwitch!
     @IBOutlet weak var switchSustain: UISwitch!
+    @IBOutlet weak var switchTriads: UISwitch!
     
     @IBOutlet weak var segMIDIChannel: UISegmentedControl!
     
@@ -45,6 +46,7 @@ class ConfigViewController: UIViewController {
         segColorScheme.selectedSegmentIndex = clr.indexOf(currentColorScheme)!
         switchIncompleteChords.on = fillIncompletePositions
         switchSustain.on = autoSustain
+        switchTriads.on = triads
         segAccidental.selectedSegmentIndex = accidental
         labelTranspose.text = "Transpose \(transposition)"
         sliderTranspose.value = Float(transposition)
@@ -72,6 +74,8 @@ class ConfigViewController: UIViewController {
         currentColorScheme = clr[segColorScheme.selectedSegmentIndex]
         fillIncompletePositions = switchIncompleteChords.on
         autoSustain = switchSustain.on
+        triads = switchTriads.on
+        
         accidental = segAccidental.selectedSegmentIndex
         transposition = Int(floor(sliderTranspose.value))
         midiChannel = UInt8(segMIDIChannel.selectedSegmentIndex)
@@ -84,6 +88,7 @@ class ConfigViewController: UIViewController {
         defaults.setFloat(Float(maxVel), forKey: "maxVel")
         defaults.setValue(currentColorScheme, forKey: "colorScheme")
         defaults.setBool(autoSustain, forKey: "autoSustain")
+        defaults.setBool(triads, forKey: "triads")
         defaults.setBool(fillIncompletePositions, forKey: "incompleteChords")
         defaults.setInteger(accidental, forKey: "accidental")
         defaults.setInteger(transposition, forKey: "transposition")

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eup-oY-5Uo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eup-oY-5Uo">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -135,11 +136,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="38s-z2-HWg" style="IBUITableViewCellStyleDefault" id="dXN-zf-Oq8">
+                                <rect key="frame" x="0.0" y="86" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dXN-zf-Oq8" id="gsm-lx-mSz">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="38s-z2-HWg">
+                                            <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -298,6 +302,15 @@
                                     <rect key="frame" x="208" y="313" width="112" height="21"/>
                                 </variation>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Triads" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-9O-4Ya">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="209" y="362" width="112" height="21"/>
+                                </variation>
+                            </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TyM-Co-3Sp">
                                 <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
@@ -404,6 +417,12 @@
                                     <rect key="frame" x="208" y="507" width="137" height="21"/>
                                 </variation>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eGb-LF-zrF">
+                                <rect key="frame" x="-25" y="-15" width="51" height="31"/>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="367" y="356" width="51" height="31"/>
+                                </variation>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -421,6 +440,7 @@
                                 <exclude reference="LPn-VB-Mva"/>
                                 <exclude reference="onQ-eZ-HfC"/>
                                 <exclude reference="Z1I-im-6JV"/>
+                                <exclude reference="dG8-9O-4Ya"/>
                                 <exclude reference="TyM-Co-3Sp"/>
                                 <exclude reference="B4B-qc-4Mg"/>
                                 <exclude reference="9RG-4i-DVl"/>
@@ -432,6 +452,7 @@
                                 <exclude reference="r0S-50-1h5"/>
                                 <exclude reference="1XC-Hk-xgm"/>
                                 <exclude reference="abn-vu-nci"/>
+                                <exclude reference="eGb-LF-zrF"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="ccF-kc-XxS"/>
@@ -449,6 +470,7 @@
                                 <include reference="LPn-VB-Mva"/>
                                 <include reference="onQ-eZ-HfC"/>
                                 <include reference="Z1I-im-6JV"/>
+                                <include reference="dG8-9O-4Ya"/>
                                 <include reference="TyM-Co-3Sp"/>
                                 <include reference="B4B-qc-4Mg"/>
                                 <include reference="9RG-4i-DVl"/>
@@ -460,6 +482,7 @@
                                 <include reference="r0S-50-1h5"/>
                                 <include reference="1XC-Hk-xgm"/>
                                 <include reference="abn-vu-nci"/>
+                                <include reference="eGb-LF-zrF"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="ccF-kc-XxS"/>
@@ -478,6 +501,7 @@
                         <outlet property="sliderTranspose" destination="1XC-Hk-xgm" id="d8I-3c-kj5"/>
                         <outlet property="switchIncompleteChords" destination="TyM-Co-3Sp" id="ZZW-6H-FdH"/>
                         <outlet property="switchSustain" destination="onQ-eZ-HfC" id="pCR-Lc-szV"/>
+                        <outlet property="switchTriads" destination="eGb-LF-zrF" id="gEc-yi-1CT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZZQ-Cu-Tvj" userLabel="First Responder" sceneMemberID="firstResponder"/>

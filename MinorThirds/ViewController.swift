@@ -61,6 +61,7 @@ var minVel : CGFloat = 64
 var maxVel : CGFloat = 110
 var fillIncompletePositions : Bool = true
 var autoSustain : Bool = true
+var triads : Bool = false
 var currentColorScheme : String = "Rose"
 var accidental : Int = 0
 var transposition : Int = 0
@@ -116,6 +117,9 @@ class ViewController: UIViewController {
         }
         if let defaultAutoSustain = defaults.objectForKey("autoSustain") as? Bool {
             autoSustain = defaultAutoSustain
+        }
+        if let defaultTriads = defaults.objectForKey("triads") as? Bool {
+            triads = defaultTriads
         }
         if let defaultIncompleteChords = defaults.objectForKey("incompleteChords") as? Bool {
             fillIncompletePositions = defaultIncompleteChords
@@ -362,7 +366,7 @@ class ViewController: UIViewController {
     }
     
     func detectedChord() {
-        if activeKeys.count>=4 {
+        if (activeKeys.count>=4) || (triads && (activeKeys.count>=3)) {
             if identifyChord() {
                 if incompletePosition {
                     pressExtraKeys()
