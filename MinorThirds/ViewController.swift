@@ -411,6 +411,16 @@ class ViewController: UIViewController {
                 return true
             }
         }
+        if triads {
+            if let chord = triadTable[strKeys] {
+                currentChord = chord.0
+                let (ri,rj) = keys[chord.1]
+                currentRoot = midiNote(ri,rj) % 12
+                currentBass = midiNote(bass.0,bass.1) % 12
+                //currentScale = chordScale(currentChord!,7)[0]
+                return true
+            }
+        }
         if let chord = positionTable[strKeys] {
             currentChord = chord.0
             let (ri,rj) = keys[chord.1]
