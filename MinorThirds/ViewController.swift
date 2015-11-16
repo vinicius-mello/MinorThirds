@@ -30,7 +30,7 @@ let colorWhiteNoteFG = UIColor.blackColor().CGColor
 let colorSchemes : [String : ColorScheme] = [
     "Rose" : ColorScheme(
         C: UIColor(rgba: "#F1D4AF").CGColor
-,
+        ,
         CFG: UIColor(rgba: "#774F38").CGColor,
         BlackNote: UIColor(rgba: "#E08E79").CGColor,
         BlackNoteFG: UIColor(rgba: "#C5E0DC").CGColor,
@@ -66,10 +66,46 @@ var currentColorScheme : String = "Rose"
 var accidental : Int = 0
 var transposition : Int = 0
 var midiChannel : UInt8 = 0
+var _bending = false
+var bendingBase : CGFloat = 0
+var _bendingDelta : CGFloat = 0
+var pitchBendRange : Float = 0
 
+func pitchWheel(channel : Int, delta : Float) {
+    //print("pw: \(delta)")
+    let pitchbend = UInt16(0.5*(1.0+max(-1.0,min(1.0,delta/pitchBendRange)))*0b0011111111111111)
+    let pitchbendMSB = UInt8((pitchbend&0b0011111110000000) >> 7)
+    let pitchbendLSB = UInt8(pitchbend&0b0000000001111111)
+    midi.sendBytes([0xE0+UInt8(channel),
+        pitchbendLSB,pitchbendMSB], size: 3)
+}
+
+var bending : Bool {
+get {
+    return _bending
+}
+set {
+    if (_bending != newValue) && pitchBendRange>0 {
+        pitchWheel(Int(midiChannel), delta: 0.0)
+    }
+    _bending = newValue
+}
+}
+
+var bendingDelta : CGFloat {
+get {
+    return _bendingDelta
+}
+set {
+    _bendingDelta = newValue
+    if pitchBendRange>0 {
+        pitchWheel(Int(midiChannel), delta: Float(_bendingDelta))
+    }
+}
+}
 
 class ViewController: UIViewController {
-
+    
     var extraKeys : [(Int,Int)] = []
     var incompletePosition : Bool = false
     var lastVel : UInt8 = 0
@@ -130,6 +166,9 @@ class ViewController: UIViewController {
         if let defaultTransposition = defaults.objectForKey("transposition") as? Int {
             transposition = defaultTransposition
         }
+        if let defaultPBRange = defaults.objectForKey("pitchBendRange") as? Float {
+            pitchBendRange = defaultPBRange
+        }
         if let defaultMidiChannel = defaults.objectForKey("midiChannel") as? Int {
             midiChannel = UInt8(defaultMidiChannel)
         }
@@ -180,7 +219,7 @@ class ViewController: UIViewController {
         }
         grid = gi
     }
-
+    
     func showGrid() {
         for i in 0..<16 {
             for j in 0..<16 {
@@ -233,7 +272,7 @@ class ViewController: UIViewController {
             }
         }
     }
-
+    
     func generateGrid() {
         setupNotes()
         showGrid()
@@ -294,7 +333,7 @@ class ViewController: UIViewController {
         }
         midiNoteOn(m,vel)
     }
-
+    
     func releaseKey(i : Int, _ j : Int) {
         let m = midiNote(i, j)
         if (i>=0 && i<gridHeight) && (j>=0 && j<gridWidth) {
@@ -311,13 +350,13 @@ class ViewController: UIViewController {
     }
     
     func midiNoteOn(m : Int, _ vel : UInt8) {
-            //println("midi on: \(midiToName(m)),\(vel)")
+        //println("midi on: \(midiToName(m)),\(vel)")
         midi.sendBytes([0x90|midiChannel,UInt8(m+transposition),vel])
         lastVel = vel
     }
     
     func midiNoteOff(m : Int) {
-            //println("midi off: \(midiToName(m))")
+        //println("midi off: \(midiToName(m))")
         midi.sendBytes([0x80|midiChannel,UInt8(m+transposition),0])
     }
     
@@ -331,7 +370,7 @@ class ViewController: UIViewController {
         pressPedal()
         //            println(currentScale)
         //            blockScaleNotes()
-
+        
     }
     
     func releaseChord() {
@@ -349,7 +388,7 @@ class ViewController: UIViewController {
         chordLabelShadow.string = ""
         //            unblockScaleNotes()
     }
-
+    
     func pressExtraKeys() {
         for k in extraKeys {
             let (i,j)=k
@@ -433,7 +472,7 @@ class ViewController: UIViewController {
             currentRoot = 0
             currentBass = 0
             currentScale = allNotes
-//            unblockScaleNotes()
+            //            unblockScaleNotes()
             return false
         }
     }
@@ -454,13 +493,14 @@ class ViewController: UIViewController {
         for i in 0..<gridHeight {
             for j in 0..<gridWidth {
                 let g=grid![i][j]
-             //   let m = midiNote(i,j)
+                //   let m = midiNote(i,j)
                 g.opacity = 1.0
             }
         }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        bending = false
         for t: NSObject in touches {
             let touch = t as? UITouch
             let pt = touch!.locationInView(self.view)
@@ -473,6 +513,7 @@ class ViewController: UIViewController {
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        bending = false
         for t: NSObject in touches {
             let touch = t as? UITouch
             //let pt = touch!.locationInView(self.view)
@@ -490,8 +531,18 @@ class ViewController: UIViewController {
             detectedChord()
         }
     }
-  
+    
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if pitchBendRange>0 && activeKeys.count == 1 {
+            let touch = touches.first! as UITouch
+            let pt = touch.locationInView(self.view)
+            if !bending {
+                bending = true
+                bendingBase = pt.y
+            }
+            bendingDelta = (bendingBase - pt.y)/noteHeight
+            return
+        }
         var flag = false
         for t: NSObject in touches {
             let touch = t as? UITouch
@@ -510,9 +561,10 @@ class ViewController: UIViewController {
             detectedChord()
         }
     }
-
+    
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         //println("CANCEL")
+        bending = false
         for t: NSObject in touches! {
             let touch = t as? UITouch
             //let pt = touch!.locationInView(self.view)
@@ -534,7 +586,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
 }
 
