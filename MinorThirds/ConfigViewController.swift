@@ -26,6 +26,8 @@ class ConfigViewController: UIViewController {
     @IBOutlet weak var sliderTranspose: UISlider!
     @IBOutlet weak var labelTranspose: UILabel!
     
+    @IBOutlet weak var sliderPB: UISlider!
+    @IBOutlet weak var labelPB: UILabel!
     
     let rangeVel = RangeSlider(frame: CGRectZero)
     
@@ -50,6 +52,8 @@ class ConfigViewController: UIViewController {
         segAccidental.selectedSegmentIndex = accidental
         labelTranspose.text = "Transpose \(transposition)"
         sliderTranspose.value = Float(transposition)
+        sliderPB.value = pitchBendRange
+        labelPB.text = "PB Range \(Int(pitchBendRange))"
         segMIDIChannel.selectedSegmentIndex = Int(midiChannel)
 // Do any additional setup after loading the view.
     }
@@ -78,6 +82,7 @@ class ConfigViewController: UIViewController {
         
         accidental = segAccidental.selectedSegmentIndex
         transposition = Int(floor(sliderTranspose.value))
+        pitchBendRange = floor(sliderPB.value)
         midiChannel = UInt8(segMIDIChannel.selectedSegmentIndex)
         
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -92,6 +97,7 @@ class ConfigViewController: UIViewController {
         defaults.setBool(fillIncompletePositions, forKey: "incompleteChords")
         defaults.setInteger(accidental, forKey: "accidental")
         defaults.setInteger(transposition, forKey: "transposition")
+        defaults.setFloat(pitchBendRange, forKey: "pitchBendRange")
         defaults.setInteger(Int(midiChannel), forKey: "midiChannel")
         
         main.generateGrid()
@@ -102,6 +108,12 @@ class ConfigViewController: UIViewController {
         let value = Int(floor(sliderTranspose.value))
         labelTranspose.text = "Transpose \(value)"
     }
+    
+    @IBAction func pbRangeChange(sender: AnyObject) {
+        let value = Int(floor(sliderPB.value))
+        labelPB.text = "PB Range \(value)"
+    }
+    
     /*
     @objc func doneAction() {
         //midi = VirtualSourceMidi("MinorThirds")

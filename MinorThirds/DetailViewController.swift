@@ -110,7 +110,7 @@ class DetailViewController: UIViewController {
     
     @IBAction func returnToKeys(sender: AnyObject) {
         let nav = self.presentingViewController as! UINavigationController
-        let main = nav.viewControllers[0] as! ViewController
+        _ = nav.viewControllers[0] as! ViewController
         nav.dismissViewControllerAnimated(true, completion: nil)
     }
 

@@ -38,7 +38,7 @@
             MIDIEndpointRef outputEndpoint = MIDIGetDestination(index);
             if (outputEndpoint)
             {
-                OSStatus s = MIDISend(outPort, outputEndpoint, packetList);
+                /*OSStatus s = */MIDISend(outPort, outputEndpoint, packetList);
             }
         }
     } else {

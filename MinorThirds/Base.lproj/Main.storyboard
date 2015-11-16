@@ -423,6 +423,24 @@
                                     <rect key="frame" x="367" y="356" width="51" height="31"/>
                                 </variation>
                             </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PB Range" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4v-zY-5mF">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="460" y="362" width="118" height="21"/>
+                                </variation>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="12" translatesAutoresizingMaskIntoConstraints="NO" id="HMh-CX-mzW" userLabel="Slider PB">
+                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="597" y="356" width="185" height="31"/>
+                                </variation>
+                                <connections>
+                                    <action selector="pbRangeChange:" destination="LYw-Jt-9f3" eventType="valueChanged" id="Ofl-ky-y5F"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -453,6 +471,8 @@
                                 <exclude reference="1XC-Hk-xgm"/>
                                 <exclude reference="abn-vu-nci"/>
                                 <exclude reference="eGb-LF-zrF"/>
+                                <exclude reference="J4v-zY-5mF"/>
+                                <exclude reference="HMh-CX-mzW"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="ccF-kc-XxS"/>
@@ -483,6 +503,8 @@
                                 <include reference="1XC-Hk-xgm"/>
                                 <include reference="abn-vu-nci"/>
                                 <include reference="eGb-LF-zrF"/>
+                                <include reference="J4v-zY-5mF"/>
+                                <include reference="HMh-CX-mzW"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="ccF-kc-XxS"/>
@@ -491,6 +513,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="labelPB" destination="J4v-zY-5mF" id="3a8-iW-UDY"/>
                         <outlet property="labelTranspose" destination="abn-vu-nci" id="ztp-Qg-BSB"/>
                         <outlet property="segAccidental" destination="LPn-VB-Mva" id="fKS-W0-UwN"/>
                         <outlet property="segBaseNote" destination="Rko-xd-zVj" id="cSd-yB-xir"/>
@@ -498,6 +521,7 @@
                         <outlet property="segHeight" destination="qBk-oQ-zf6" id="lc9-Xk-cnr"/>
                         <outlet property="segMIDIChannel" destination="pee-5h-gMg" id="IPJ-dZ-ItS"/>
                         <outlet property="segWidth" destination="f6A-9i-Pnk" id="q4l-5k-98B"/>
+                        <outlet property="sliderPB" destination="HMh-CX-mzW" id="qeh-jL-NPQ"/>
                         <outlet property="sliderTranspose" destination="1XC-Hk-xgm" id="d8I-3c-kj5"/>
                         <outlet property="switchIncompleteChords" destination="TyM-Co-3Sp" id="ZZW-6H-FdH"/>
                         <outlet property="switchSustain" destination="onQ-eZ-HfC" id="pCR-Lc-szV"/>
