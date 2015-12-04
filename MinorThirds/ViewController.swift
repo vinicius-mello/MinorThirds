@@ -130,7 +130,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UIApplication.sharedApplication().statusBarHidden = true
-        
+        allPositions = fillAllPositions()
         let defaults = NSUserDefaults.standardUserDefaults()
         
         if let defaultGridHeight = defaults.objectForKey("gridHeight") as? Int {

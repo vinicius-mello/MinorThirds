@@ -10,9 +10,9 @@
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
+      "filename" : "MinorThirds2.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "filename" : "MinorThirds2.png",
       "scale" : "1x"
     },
     {
@@ -25,9 +25,9 @@
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
+      "filename" : "MinorThirds22.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "filename" : "MinorThirds2-1.png",
       "scale" : "2x"
     }
   ],

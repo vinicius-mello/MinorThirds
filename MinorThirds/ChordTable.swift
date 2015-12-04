@@ -197,6 +197,7 @@ let positionTable : [String : (ChordType,Int)] = [
     "(0,0)(1,4)(2,5)(2,6)" : (CM,1),
     "(0,0)(2,2)(1,4)(2,5)" : (CM,2),
     "(0,0)(2,1)(2,2)(1,4)" : (CM,3),
+    "(0,0)(0,4)(1,5)(0,8)" : (CM,0),
     
     
     "(0,0)(0,1)(1,2)(0,4)" : (Cm,0),
@@ -244,6 +245,7 @@ let positionTable : [String : (ChordType,Int)] = [
     
     "(0,0)(0,1)(0,2)(0,3)" : (Cdim,0),
     "(0,0)(0,3)(0,5)(0,6)" : (Cdim,0),
+    "(0,0)(0,2)(0,3)(0,5)" : (Cdim,0),
     //    "(0,0)(0,5)(0,6)(0,7)" : (Cdim,0),
     
     "(0,0)(0,1)(0,2)(1,3)" : (Cm7b5,0),
@@ -492,6 +494,9 @@ let triadTable : [String : (ChordType,Int)] = [
     "(0,0)(1,2)(1,5)" : (CM,0),
     "(0,0)(-1,3)(0,5)" : (CM,1),
     "(0,0)(2,2)(3,4)" : (CM,1),
+    "(0,0)(0,1)(2,2)" : (CM,2),
+    "(0,0)(1,1)(1,5)" : (CM,0),
+    "(0,0)(-1,3)(-1,7)" : (CM,1),
     
     "(0,0)(0,1)(1,2)" : (Cm,0),
     "(0,0)(1,2)(0,5)" : (Cm,0),
@@ -503,6 +508,8 @@ let triadTable : [String : (ChordType,Int)] = [
     "(0,0)(-1,3)(-1,6)" : (Cm,2),
     "(0,0)(0,3)(1,5)" : (Cm,1),
     "(0,0)(0,3)(0,4)(1,5)" : (Cm,1),
+    "(0,0)(0,1)(0,5)" : (Cm,0),
+    "(0,0)(0,4)(0,7)" : (Cm,2),
     
     "(0,0)(0,1)(0,2)" : (Cmb5,0),
     "(0,0)(0,1)(0,3)" : (Cmb5,2),
@@ -512,10 +519,13 @@ let triadTable : [String : (ChordType,Int)] = [
     "(0,0)(1,3)(0,5)" : (Cm7,0),
     "(0,0)(0,1)(1,3)" : (Cm7,0),
     "(0,0)(1,3)(3,4)" : (Cm7,0),
+    "(0,0)(-1,1)(-1,2)" : (Cm7,1),
+    "(0,0)(2,4)(2,5)" : (Cm7,1),
     
     "(0,0)(-1,1)(0,2)" : (C7,1),
     "(0,0)(1,1)(1,3)" : (C7,0),
     "(0,0)(1,3)(1,5)" : (C7,0),
+    "(0,0)(0,2)(-1,3)" : (C7,2),
     
     "(0,0)(1,1)(2,3)" : (C7M,0),
     "(0,0)(2,3)(1,5)" : (C7M,0),
@@ -523,10 +533,17 @@ let triadTable : [String : (ChordType,Int)] = [
     "(0,0)(1,1)(2,2)" : (Ca5,0),
     
     "(0,0)(2,1)(1,2)" : (C4,0),
+    "(0,0)(1,2)(2,5)" : (C4,0),
+    "(0,0)(1,2)(2,4)" : (C4,1),
+    "(0,0)(0,4)(-1,6)" : (C4,0),
+    
+    "(0,0)(2,1)(1,3)" : (C47,0),
+    "(0,0)(1,3)(2,5)" : (C47,0),
     
     "(0,0)(1,2)(0,4)(1,6)" : (C5,0),
     "(0,0)(1,2)(0,4)" : (C5,0),
     "(0,0)(0,4)(1,6)(0,8)" : (C5,0),
+    "(0,0)(0,4)(1,6)" : (C5,0),
     //One Note
     "(0,0)(0,4)(0,8)" : (C8,0),
     //Two Notes
@@ -590,7 +607,7 @@ class Position {
     }
 }
 
-var allPositions : [Position] = []
+var allPositions : [Position]! = nil
 
 func parseKeys(keys : String) -> [(Int,Int)] {
     let woutlast = String(keys.characters.dropLast())
@@ -602,19 +619,22 @@ func parseKeys(keys : String) -> [(Int,Int)] {
         let pa : (Int,Int) = (Int(p[0])!,Int(p[1])!)
         result.append(pa)
     }
+    //print(result)
     return result
 }
 
-func fillAllPositions() {
+func fillAllPositions() -> [Position] {
+    var lallPositions : [Position] = []
     for (k,t) in positionTable {
-        allPositions.append(Position(chord: t.0, keys: parseKeys(k), extraKeys: [], root: t.1))
+        lallPositions.append(Position(chord: t.0, keys: parseKeys(k), extraKeys: [], root: t.1))
     }
     for (k,t) in triadTable {
-        allPositions.append(Position(chord: t.0, keys: parseKeys(k), extraKeys: [], root: t.1))
+        lallPositions.append(Position(chord: t.0, keys: parseKeys(k), extraKeys: [], root: t.1))
     }
     for (k,t) in incompletePositionTable {
-        allPositions.append(Position(chord: t.0, keys: parseKeys(k), extraKeys: t.2, root: t.1))
+        lallPositions.append(Position(chord: t.0, keys: parseKeys(k), extraKeys: t.2, root: t.1))
     }
-    allPositions.sortInPlace { $0.0.chord.symbol < $0.1.chord.symbol }
+    lallPositions.sortInPlace { $0.0.chord.symbol < $0.1.chord.symbol }
+    return lallPositions
 }
 
