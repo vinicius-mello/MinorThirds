@@ -26,6 +26,9 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         masterViewController = self
+        if allPositions == nil {
+            allPositions = fillAllPositions()
+        }
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
