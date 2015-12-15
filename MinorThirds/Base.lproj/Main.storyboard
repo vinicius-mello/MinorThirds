@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eup-oY-5Uo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eup-oY-5Uo">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -208,15 +208,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKj-Mq-VGO">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Back to Keyboard">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="returnToKeys:" destination="LYw-Jt-9f3" eventType="touchUpInside" id="1NF-Tm-Dms"/>
-                                </connections>
-                            </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="f6A-9i-Pnk">
                                 <rect key="frame" x="-61" y="-14" width="123" height="29"/>
                                 <segments>
@@ -226,7 +217,7 @@
                                     <segment title="13"/>
                                 </segments>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="338" y="95" width="145" height="29"/>
+                                    <rect key="frame" x="178" y="52" width="145" height="29"/>
                                 </variation>
                             </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="qBk-oQ-zf6">
@@ -238,7 +229,7 @@
                                     <segment title="10"/>
                                 </segments>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="338" y="153" width="145" height="29"/>
+                                    <rect key="frame" x="178" y="110" width="145" height="29"/>
                                 </variation>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Columns" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u06-x5-N26">
@@ -248,7 +239,7 @@
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="208" y="95" width="97" height="21"/>
+                                    <rect key="frame" x="48" y="52" width="97" height="21"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lines" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="80R-2l-TGD">
@@ -257,7 +248,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="208" y="153" width="42" height="21"/>
+                                    <rect key="frame" x="48" y="110" width="42" height="21"/>
                                 </variation>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Rko-xd-zVj">
@@ -273,7 +264,7 @@
                                     <segment title="G2"/>
                                 </segments>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="338" y="205" width="446" height="29"/>
+                                    <rect key="frame" x="178" y="162" width="446" height="29"/>
                                 </variation>
                             </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="LPn-VB-Mva">
@@ -284,13 +275,13 @@
                                     <segment title="Mixed"/>
                                 </segments>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="338" y="255" width="145" height="29"/>
+                                    <rect key="frame" x="178" y="212" width="145" height="29"/>
                                 </variation>
                             </segmentedControl>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="onQ-eZ-HfC">
                                 <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="367" y="308" width="51" height="31"/>
+                                    <rect key="frame" x="207" y="265" width="51" height="31"/>
                                 </variation>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto Sustain" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z1I-im-6JV">
@@ -299,7 +290,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="208" y="313" width="112" height="21"/>
+                                    <rect key="frame" x="48" y="270" width="112" height="21"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Triads" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-9O-4Ya">
@@ -308,13 +299,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="209" y="362" width="112" height="21"/>
+                                    <rect key="frame" x="49" y="319" width="112" height="21"/>
                                 </variation>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TyM-Co-3Sp">
                                 <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="661" y="308" width="51" height="31"/>
+                                    <rect key="frame" x="501" y="265" width="51" height="31"/>
                                 </variation>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autocomplete Chords" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4B-qc-4Mg">
@@ -323,7 +314,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="460" y="313" width="168" height="21"/>
+                                    <rect key="frame" x="300" y="270" width="168" height="21"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Base Note" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9RG-4i-DVl">
@@ -332,7 +323,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="208" y="205" width="81" height="21"/>
+                                    <rect key="frame" x="48" y="162" width="81" height="21"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accidental" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G0F-EU-nar">
@@ -341,7 +332,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="208" y="255" width="81" height="21"/>
+                                    <rect key="frame" x="48" y="212" width="81" height="21"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Velocity Range" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhN-PV-LOP">
@@ -350,7 +341,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="208" y="413" width="114" height="21"/>
+                                    <rect key="frame" x="48" y="370" width="114" height="21"/>
                                 </variation>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7o8-pC-qeu">
@@ -360,7 +351,7 @@
                                     <segment title="Green"/>
                                 </segments>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="661" y="255" width="123" height="29"/>
+                                    <rect key="frame" x="501" y="212" width="123" height="29"/>
                                 </variation>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Scheme" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rCW-H8-KE0">
@@ -369,7 +360,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="501" y="255" width="110" height="21"/>
+                                    <rect key="frame" x="341" y="212" width="110" height="21"/>
                                 </variation>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pee-5h-gMg">
@@ -387,7 +378,7 @@
                                     <segment title="10"/>
                                 </segments>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="367" y="458" width="417" height="29"/>
+                                    <rect key="frame" x="207" y="415" width="417" height="29"/>
                                 </variation>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MIDI Channel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r0S-50-1h5">
@@ -396,13 +387,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="208" y="461" width="114" height="21"/>
+                                    <rect key="frame" x="48" y="418" width="114" height="21"/>
                                 </variation>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-12" maxValue="12" translatesAutoresizingMaskIntoConstraints="NO" id="1XC-Hk-xgm">
                                 <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="365" y="507" width="421" height="31"/>
+                                    <rect key="frame" x="205" y="464" width="421" height="31"/>
                                 </variation>
                                 <connections>
                                     <action selector="tranposeChange:" destination="LYw-Jt-9f3" eventType="valueChanged" id="CqN-ph-LfS"/>
@@ -414,13 +405,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="208" y="507" width="137" height="21"/>
+                                    <rect key="frame" x="48" y="464" width="137" height="21"/>
                                 </variation>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eGb-LF-zrF">
                                 <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="367" y="356" width="51" height="31"/>
+                                    <rect key="frame" x="207" y="313" width="51" height="31"/>
                                 </variation>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PB Range" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4v-zY-5mF">
@@ -429,27 +420,34 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="460" y="362" width="118" height="21"/>
+                                    <rect key="frame" x="300" y="319" width="118" height="21"/>
                                 </variation>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="12" translatesAutoresizingMaskIntoConstraints="NO" id="HMh-CX-mzW" userLabel="Slider PB">
                                 <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="597" y="356" width="185" height="31"/>
+                                    <rect key="frame" x="437" y="313" width="185" height="31"/>
                                 </variation>
                                 <connections>
                                     <action selector="pbRangeChange:" destination="LYw-Jt-9f3" eventType="valueChanged" id="Ofl-ky-y5F"/>
                                 </connections>
                             </slider>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKj-Mq-VGO">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Back to Keyboard">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="276" y="533" width="121" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="returnToKeys:" destination="LYw-Jt-9f3" eventType="touchUpInside" id="1NF-Tm-Dms"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="oxU-Qj-BZs" firstAttribute="top" secondItem="lKj-Mq-VGO" secondAttribute="bottom" constant="31" id="ccF-kc-XxS"/>
-                            <constraint firstAttribute="centerX" secondItem="lKj-Mq-VGO" secondAttribute="centerX" id="fwK-aq-UBj"/>
-                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="lKj-Mq-VGO"/>
                                 <exclude reference="f6A-9i-Pnk"/>
                                 <exclude reference="qBk-oQ-zf6"/>
                                 <exclude reference="u06-x5-N26"/>
@@ -473,15 +471,11 @@
                                 <exclude reference="eGb-LF-zrF"/>
                                 <exclude reference="J4v-zY-5mF"/>
                                 <exclude reference="HMh-CX-mzW"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="ccF-kc-XxS"/>
-                                <exclude reference="fwK-aq-UBj"/>
+                                <exclude reference="lKj-Mq-VGO"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=regular">
                             <mask key="subviews">
-                                <include reference="lKj-Mq-VGO"/>
                                 <include reference="f6A-9i-Pnk"/>
                                 <include reference="qBk-oQ-zf6"/>
                                 <include reference="u06-x5-N26"/>
@@ -505,10 +499,7 @@
                                 <include reference="eGb-LF-zrF"/>
                                 <include reference="J4v-zY-5mF"/>
                                 <include reference="HMh-CX-mzW"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="ccF-kc-XxS"/>
-                                <include reference="fwK-aq-UBj"/>
+                                <include reference="lKj-Mq-VGO"/>
                             </mask>
                         </variation>
                     </view>
@@ -530,7 +521,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZZQ-Cu-Tvj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1649.25" y="197"/>
+            <point key="canvasLocation" x="1676.25" y="197"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OHz-hc-Oiv">

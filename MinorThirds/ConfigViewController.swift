@@ -58,7 +58,7 @@ class ConfigViewController: UIViewController {
 // Do any additional setup after loading the view.
     }
     override func viewDidLayoutSubviews() {
-        rangeVel.frame = CGRect(x: 366, y: 410,
+        rangeVel.frame = CGRect(x: 207, y: 366,
             width: 416, height: 30.0)
     }
     
