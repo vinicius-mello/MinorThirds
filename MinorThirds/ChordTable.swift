@@ -40,10 +40,11 @@ let Cm7 = ChordType(name: "minor seventh",
     symbol: "m7", tones: [0,3,7,10])
 let Cdim = ChordType(name: "diminished",
     symbol: "°", tones: [0,3,6,9])
-let Cmb5 = ChordType(name: "minor fifth",
+let Cmb5 = ChordType(name: "minor diminished fifth",
     symbol: "m(b5)", tones: [0,3,6])
 let Cm7b5 = ChordType(name: "half diminished",
     symbol: "m7(b5)", tones: [0,3,6,10])
+//
 let Cm79 = ChordType(name: "minor ninth",
     symbol: "m7(9)", tones: [0,3,7,10,14])
 let Cm69 = ChordType(name: "",
@@ -64,6 +65,7 @@ let C7a11 = ChordType(name: "",
     symbol: "7(#11)", tones: [0,4,10,18])
 let C71113 = ChordType(name: "",
     symbol: "7(11)(13)", tones: [0,10,17,21])
+//
 let C7Ma11 = ChordType(name: "",
     symbol: "7M(#11)", tones: [0,4,11,18])
 let C69 = ChordType(name: "",
@@ -84,6 +86,7 @@ let C7M6 = ChordType(name: "",
     symbol: "7M(6)", tones: [0,4,7,9,11])
 let C7M69 = ChordType(name: "",
     symbol: "7M(6)(9)", tones: [0,4,7,9,11,14])
+//
 let C7M9a11 = ChordType(name: "",
     symbol: "7M(9)(#11)", tones: [0,4,11,14,18])
 let C69a11 = ChordType(name: "",
@@ -104,6 +107,7 @@ let Cm7M911 = ChordType(name: "",
     symbol: "m(7M)(9)(11)", tones: [0,3,11,14,17])
 let Cm9 = ChordType(name: "",
     symbol: "m(add9)", tones: [0,3,7,14])
+//
 let C4 = ChordType(name: "",
     symbol: "4", tones: [0,5,7])
 let C7913 = ChordType(name: "",
@@ -124,6 +128,7 @@ let C7b913 = ChordType(name: "",
     symbol: "7(b9)(13)", tones: [0,4,7,10,13,21])
 let C7a5b9 = ChordType(name: "",
     symbol: "7(#5)(b9)", tones: [0,4,8,10,13])
+//
 let C7a5a9 = ChordType(name: "",
     symbol: "7(#5)(#9)", tones: [0,4,8,10,15])
 let C7b5b9 = ChordType(name: "",
@@ -144,6 +149,7 @@ let C7b9b13 = ChordType(name: "",
     symbol: "7(b9)(b13)", tones: [0,4,7,10,13,20])
 let C7a9a11 = ChordType(name: "",
     symbol: "7(#9)(#11)", tones: [0,4,7,10,15,18])
+//
 let Cmb6 = ChordType(name: "",
     symbol: "m(b6)", tones: [0,3,7,8])
 let Cm5 = ChordType(name: "",
@@ -154,7 +160,6 @@ let C5 = ChordType(name: "",
     symbol: "5", tones: [0,7,12])
 let C8 = ChordType(name: "",
     symbol: "8", tones: [0,12,24])
-
 let Cdimb13 = ChordType(name: "",
     symbol: "°(b13)", tones: [0,3,6,9,20])
 let Cdim7M = ChordType(name: "",
@@ -165,20 +170,13 @@ let Cdim11 = ChordType(name: "",
     symbol: "°(11)", tones: [0,3,6,9,17])
 
 let chordTypes : [ChordType] = [
-    CM,Cm,C7,C7M,C6,Cm6,Cm7,
-    Cdim,Cm7b5,Cm79,Cm69,
-    C713,C7b13,C79,C7b9,
-    Cm711,C749,C7a11,C71113,C7Ma11,
-    C69,C7Ma5,C7a9,C7M9,C47,C9,
-    Cm7b9,C7M6,C7M69,C7M9a11,C69a11,
-    Ca5,Cm7911,Cm6911,Cm7M,Cm7M9,
-    Cm7M6,Cm7M911,Cm9,C4,C7913,
-    C79a11,C7a1113,C7a5,C7b5,C7a59,
-    C7b59,C7b913,C7a5b9,C7a5a9,
-    C7b5b9,C7b5a9,C47913,C47b9,
-    C7b9a11,C7b9a1113,Cm7b59,Cm7b59,C7b9b13,C7a9a11,
-    Cmb6,Cm5,
-    Cdimb13,Cdim7M,Cdim9,Cdim11,C59,C5,Cmb5,C8]
+    CM,Cm,C7,C7M,C6,Cm6,Cm7,Cdim,Cmb5,Cm7b5,
+    Cm79,Cm69,C713,C7b13,C79,C7b9,Cm711,C749,C7a11,C71113,
+    C7Ma11,C69,C7Ma5,C7a9,C7M9,C47,C9,Cm7b9,C7M6,C7M69,
+    C7M9a11,C69a11,Ca5,Cm7911,Cm6911,Cm7M,Cm7M9,Cm7M6,Cm7M911,Cm9,
+    C4,C7913,C79a11,C7a1113,C7a5,C7b5,C7a59,C7b59,C7b913,C7a5b9,
+    C7a5a9,C7b5b9,C7b5a9,C47913,C47b9,C7b9a11,C7b9a1113,Cm7b59,C7b9b13,C7a9a11,
+    Cmb6,Cm5,C59,C5,C8,Cdimb13,Cdim7M,Cdim9,Cdim11]
 
 
 let positionTable : [String : (ChordType,Int)] = [
@@ -634,7 +632,7 @@ func fillAllPositions() -> [Position] {
     for (k,t) in incompletePositionTable {
         lallPositions.append(Position(chord: t.0, keys: parseKeys(k), extraKeys: t.2, root: t.1))
     }
-    lallPositions.sortInPlace { $0.0.chord.symbol < $0.1.chord.symbol }
+    lallPositions.sortInPlace { $0.chord.symbol < $1.chord.symbol }
     return lallPositions
 }
 
