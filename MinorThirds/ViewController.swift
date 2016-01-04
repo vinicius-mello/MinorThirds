@@ -424,8 +424,19 @@ class ViewController: UIViewController {
         keys.sortInPlace { $0.1 == $1.1 ? $0.0 < $1.0 : $0.1 < $1.1 }
         var strKeys : String = ""
         let bass = keys[0]
-        if (keys[1].1-bass.1)>4 {
+        if (keys[1].0-keys[0].0)>2 {
+            keys[0].0=(keys[0].0)+3
+            keys[0].1=(keys[0].1)-1
+            if (keys[1].0-keys[0].0)>2 {
+                keys[0].0=(keys[0].0)+3
+                keys[0].1=(keys[0].1)-1
+            }
+        }
+        if (keys[1].1-keys[0].1)>4 {
             keys[0].1=(keys[0].1)+4
+            if (keys[1].1-keys[0].1)>4 {
+                keys[0].1=(keys[0].1)+4
+            }
         }
         for k in keys {
             strKeys = strKeys+"(\(k.0-keys[0].0),\(k.1-keys[0].1))"
