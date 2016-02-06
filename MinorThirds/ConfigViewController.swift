@@ -34,7 +34,7 @@ class ConfigViewController: UIViewController {
     let rangeVel = RangeSlider(frame: CGRectZero)
     
     let baseNote : [Int] = [31,33,35,36,38,40,41,43]
-    let clr : [String] = ["Rose", "Green"]
+    let clr : [String] = ["Rose", "Green", "Blue"]
     var centralViewController : CABTMIDILocalPeripheralViewController? = nil
     
     override func viewDidLoad() {

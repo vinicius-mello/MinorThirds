@@ -47,6 +47,16 @@ let colorSchemes : [String : ColorScheme] = [
         WhiteNote: UIColor(rgba: "#C3D1D1").CGColor,
         WhiteNoteFG: UIColor(rgba: "#3C5760").CGColor,
         Background: UIColor(rgba: "#210A02").CGColor
+    ),
+    "Blue" : ColorScheme(
+        C: UIColor(rgba: "#7094B8").CGColor
+        ,
+        CFG: UIColor(rgba: "#000000").CGColor,
+        BlackNote: UIColor(rgba: "#4C7AB9").CGColor,
+        BlackNoteFG: UIColor(rgba: "#000000").CGColor,
+        WhiteNote: UIColor(rgba: "#B3C7EB").CGColor,
+        WhiteNoteFG: UIColor(rgba: "#000000").CGColor,
+        Background: UIColor(rgba: "#363E52").CGColor
     )
 ]
 

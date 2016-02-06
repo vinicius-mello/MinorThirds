@@ -354,9 +354,10 @@
                                 <segments>
                                     <segment title="Rose"/>
                                     <segment title="Green"/>
+                                    <segment title="Blue"/>
                                 </segments>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="501" y="212" width="123" height="29"/>
+                                    <rect key="frame" x="474" y="212" width="150" height="29"/>
                                 </variation>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Scheme" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rCW-H8-KE0">
