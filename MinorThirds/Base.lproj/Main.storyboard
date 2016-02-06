@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eup-oY-5Uo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eup-oY-5Uo">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -38,6 +37,9 @@
                                 <state key="normal" title="Chords">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="widthClass=regular" misplaced="YES">
+                                    <rect key="frame" x="741" y="562" width="50" height="30"/>
+                                </variation>
                                 <connections>
                                     <segue destination="ZAa-md-MGE" kind="presentation" id="C3Z-Zl-QUs"/>
                                 </connections>
@@ -45,8 +47,9 @@
                         </subviews>
                         <color key="backgroundColor" red="0.50196078431372548" green="0.25098039215686274" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="JCY-Th-ZMe" secondAttribute="trailing" constant="-10" id="jwY-7J-Xdi"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JCY-Th-ZMe" secondAttribute="bottom" id="s6g-2h-1Um"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JCY-Th-ZMe" secondAttribute="bottom" constant="8" id="izV-nE-JMI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JCY-Th-ZMe" secondAttribute="trailing" constant="-15" id="jwY-7J-Xdi"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JCY-Th-ZMe" secondAttribute="bottom" constant="-5" id="s6g-2h-1Um"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -54,6 +57,7 @@
                                 <exclude reference="JCY-Th-ZMe"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="izV-nE-JMI"/>
                                 <exclude reference="s6g-2h-1Um"/>
                                 <exclude reference="jwY-7J-Xdi"/>
                             </mask>
@@ -64,6 +68,7 @@
                                 <include reference="JCY-Th-ZMe"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="izV-nE-JMI"/>
                                 <include reference="s6g-2h-1Um"/>
                                 <include reference="jwY-7J-Xdi"/>
                             </mask>
@@ -444,6 +449,21 @@
                                     <action selector="returnToKeys:" destination="LYw-Jt-9f3" eventType="touchUpInside" id="1NF-Tm-Dms"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Diagonal Slide" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BlO-fC-7WV">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="346" y="52" width="109" height="21"/>
+                                </variation>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.20000000000000001" minValue="0.0" maxValue="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="10F-yu-tof">
+                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="472" y="48" width="154" height="31"/>
+                                </variation>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
@@ -472,6 +492,8 @@
                                 <exclude reference="J4v-zY-5mF"/>
                                 <exclude reference="HMh-CX-mzW"/>
                                 <exclude reference="lKj-Mq-VGO"/>
+                                <exclude reference="BlO-fC-7WV"/>
+                                <exclude reference="10F-yu-tof"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=regular">
@@ -500,10 +522,13 @@
                                 <include reference="J4v-zY-5mF"/>
                                 <include reference="HMh-CX-mzW"/>
                                 <include reference="lKj-Mq-VGO"/>
+                                <include reference="BlO-fC-7WV"/>
+                                <include reference="10F-yu-tof"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="diagonalSlider" destination="10F-yu-tof" id="4fZ-LZ-ovZ"/>
                         <outlet property="labelPB" destination="J4v-zY-5mF" id="3a8-iW-UDY"/>
                         <outlet property="labelTranspose" destination="abn-vu-nci" id="ztp-Qg-BSB"/>
                         <outlet property="segAccidental" destination="LPn-VB-Mva" id="fKS-W0-UwN"/>

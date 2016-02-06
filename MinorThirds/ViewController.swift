@@ -70,6 +70,7 @@ var _bending = false
 var bendingBase : CGFloat = 0
 var _bendingDelta : CGFloat = 0
 var pitchBendRange : Float = 0
+var diagonalSlide : CGFloat = 0.15
 
 func pitchWheel(channel : Int, delta : Float) {
     //print("pw: \(delta)")
@@ -109,11 +110,12 @@ class ViewController: UIViewController {
     var extraKeys : [(Int,Int)] = []
     var incompletePosition : Bool = false
     var lastVel : UInt8 = 0
-    var grid : [[CATextLayer]]?
+    var grid : [[CAShapeLayer]]?
     var width : CGFloat = 0.0
     var height : CGFloat = 0.0
     var noteWidth : CGFloat = 0.0
     var noteHeight : CGFloat = 0.0
+    var gap : CGFloat = 0.0
     var notesCount : Int = 0
     var activeKeys : [UITouch : (Int,Int)] = [:]
     var currentChord : ChordType? = nil
@@ -171,6 +173,9 @@ class ViewController: UIViewController {
         if let defaultMidiChannel = defaults.objectForKey("midiChannel") as? Int {
             midiChannel = UInt8(defaultMidiChannel)
         }
+        if let defaultDiagonalSlide = defaults.objectForKey("diagonalSlide") as? Float {
+            diagonalSlide = CGFloat(defaultDiagonalSlide)
+        }
         
         setupGrid()
         showGrid()
@@ -181,6 +186,7 @@ class ViewController: UIViewController {
         l.addSublayer(chordLabelShadow)
         chordLabelShadow.frame = CGRectMake(53,52,900,300)
         chordLabelShadow.fontSize = 108
+        chordLabelShadow.font = "Verdana"
         chordLabelShadow.string = ""
         chordLabelShadow.alignmentMode = kCAAlignmentLeft
         chordLabelShadow.backgroundColor = UIColor.clearColor().CGColor
@@ -189,6 +195,7 @@ class ViewController: UIViewController {
         l.addSublayer(chordLabel)
         chordLabel.frame = CGRectMake(50,50,900,300)
         chordLabel.fontSize = 108
+        chordLabel.font = "Verdana"
         chordLabel.string = ""
         chordLabel.alignmentMode = kCAAlignmentLeft
         chordLabel.backgroundColor = UIColor.clearColor().CGColor
@@ -206,12 +213,14 @@ class ViewController: UIViewController {
     }
     
     func setupGrid() {
-        var gi = [[CATextLayer]]()
+        var gi = [[CAShapeLayer]]()
         for _ in 0..<16 {
-            var gj = [CATextLayer]()
+            var gj = [CAShapeLayer]()
             for _ in 0..<16 {
-                let g = CATextLayer()
+                let g = CAShapeLayer()
                 self.view.layer.addSublayer(g)
+                let text = CATextLayer()
+                g.addSublayer(text)
                 gj.append(g)
             }
             gi.append(gj)
@@ -238,6 +247,24 @@ class ViewController: UIViewController {
         height = self.view.bounds.height
         noteWidth = floor(width/CGFloat(gridWidth))
         noteHeight = floor(height/CGFloat(gridHeight))
+        gap = diagonalSlide * min(noteHeight,noteWidth)
+        let path = UIBezierPath()
+        path.moveToPoint(CGPoint(x: gap, y: 0))
+        path.addLineToPoint(CGPoint(x: noteWidth-gap, y:0))
+        let pi : CGFloat = 3.14159
+        path.addArcWithCenter(CGPoint(x: noteWidth,y: 0), radius: gap, startAngle: pi, endAngle: pi/2, clockwise: false)
+        path.addLineToPoint(CGPoint(x: noteWidth, y:noteHeight-gap))
+        //path.addArcWithCenter(CGPoint(x: noteWidth,y: noteHeight), radius: gap, startAngle: 3*pi/2, endAngle: pi, clockwise: true)
+        path.addArcWithCenter(CGPoint(x: noteWidth,y: noteHeight), radius: gap, startAngle: 3*pi/2, endAngle: 0, clockwise: true)
+        path.addLineToPoint(CGPoint(x: noteWidth, y:noteHeight+gap))
+        path.addArcWithCenter(CGPoint(x: noteWidth,y: noteHeight), radius: gap, startAngle: pi/2, endAngle: pi, clockwise: true)
+        path.addLineToPoint(CGPoint(x: gap, y:noteHeight))
+        path.addArcWithCenter(CGPoint(x: 0,y: noteHeight), radius: gap, startAngle: 0.0, endAngle: 3*pi/2, clockwise: false)
+        path.addLineToPoint(CGPoint(x: 0, y: gap))
+//        path.addArcWithCenter(CGPoint(x: 0,y: 0), radius: gap, startAngle: pi/2, endAngle: 0, clockwise: false)
+  
+        path.closePath()
+
         
         let colorC = colorSchemes[currentColorScheme]?.C
         let colorCFG = colorSchemes[currentColorScheme]?.CFG
@@ -249,24 +276,28 @@ class ViewController: UIViewController {
         for i in 0..<gridHeight {
             for j in 0..<gridWidth {
                 let g=grid![i][j]
-                g.frame = CGRectMake(CGFloat(j)*noteWidth+2.0,  CGFloat(gridHeight-1-i)*noteHeight+2.0, noteWidth,  noteHeight)
+                g.path = path.CGPath
+                g.transform = CATransform3DMakeTranslation(CGFloat(j)*noteWidth+2.0, CGFloat(gridHeight-1-i)*noteHeight+2.0, 0)
                 let m = midiNote(i,j)
-                g.string = midiToName(m)
-                g.fontSize = 20
-                
+                let text : CATextLayer = g.sublayers!.first as! CATextLayer
+                text.string = midiToName(m)
+                text.fontSize = 20
+                text.font = "Verdana"
+                text.backgroundColor = UIColor.clearColor().CGColor
+                text.frame = CGRect(x: 0, y: gap, width: noteWidth, height: noteHeight-gap)
+                text.alignmentMode = kCAAlignmentCenter
+                g.strokeColor = UIColor.blackColor().CGColor
+                g.lineWidth = 3.0
                 if blackNote(m) {
-                    g.backgroundColor = colorBlackNote
-                    g.foregroundColor = colorBlackNoteFG
+                    g.fillColor = colorBlackNote
+                    text.foregroundColor = colorBlackNoteFG
                 } else if m%12 == 0 {
-                    g.backgroundColor = colorC
-                    g.foregroundColor = colorCFG
+                    g.fillColor = colorC
+                    text.foregroundColor = colorCFG
                 } else {
-                    g.backgroundColor = colorWhiteNote
-                    g.foregroundColor = colorWhiteNoteFG
+                    g.fillColor = colorWhiteNote
+                    text.foregroundColor = colorWhiteNoteFG
                 }
-                g.borderWidth = 1.0
-                g.borderColor = UIColor.blackColor().CGColor
-                g.alignmentMode = kCAAlignmentCenter
                 //g.opaque = true
             }
         }
@@ -286,12 +317,33 @@ class ViewController: UIViewController {
         var i : Int = gridHeight-1-Int((pt.y-2.0)/noteHeight)
         i = min(max(0,i),gridHeight-1)
         j = min(max(0,j),gridWidth-1)
+        if diagonalSlide>0 {
+            let y = (pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))
+            let x = (pt.x-(CGFloat(j)*noteWidth+2.0))
+            //print(i,j,x,y)
+            if sqrt((x-0.0)*(x-0.0)+(y-noteHeight)*(y-noteHeight))<gap {
+                j=j-1
+            } else if (abs(x-0.0)+abs(y-0.0))<gap {
+                j=j-1
+                i=i+1
+            } else if sqrt((x-noteWidth)*(x-noteWidth)+(y-0.0)*(y-0.0))<gap {
+                i=i+1
+            }
+            i = min(max(0,i),gridHeight-1)
+            j = min(max(0,j),gridWidth-1)
+        }
         return (i,j)
     }
     
     func locationToVel(pt : CGPoint) -> UInt8 {
         let i : Int = gridHeight-1-Int((pt.y-2.0)/noteHeight)
-        let vel = (noteHeight-(pt.y-CGFloat(gridHeight-1-i)*noteHeight+2.0))/noteHeight
+        let j : Int = Int((pt.x-2.0)/noteWidth)
+        let x = (pt.x-(CGFloat(j)*noteWidth+2.0))
+        let y = (pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))
+        if (abs(x-0.0)+abs(y-0.0))<gap {
+            return UInt8(minVel)
+        }
+        let vel = max(0.0,1.0-(pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))/noteHeight)
         return UInt8(minVel+(maxVel-minVel)*vel)
     }
     
@@ -363,9 +415,10 @@ class ViewController: UIViewController {
     func activateChord() {
         let chordName = currentChord!.format(currentRoot, bass: currentBass )
         //println(chordName)
+        CATransaction.begin()
         chordLabelShadow.string = chordName
         chordLabel.string = chordName
-        
+        CATransaction.commit()
         pressPedal()
         //            println(currentScale)
         //            blockScaleNotes()
@@ -383,8 +436,11 @@ class ViewController: UIViewController {
         releasePedal()
         currentChord = nil
         //            currentScale = allNotes
+        CATransaction.begin()
         chordLabel.string = ""
         chordLabelShadow.string = ""
+        CATransaction.commit()
+
         //            unblockScaleNotes()
     }
     
@@ -441,7 +497,7 @@ class ViewController: UIViewController {
         for k in keys {
             strKeys = strKeys+"(\(k.0-keys[0].0),\(k.1-keys[0].1))"
         }
-        print(strKeys)
+        //print(strKeys)
         incompletePosition = false
         if fillIncompletePositions {
             if let incompleteChord = incompletePositionTable[strKeys] {
@@ -561,9 +617,10 @@ class ViewController: UIViewController {
             let (ai,aj) = activeKeys[touch!]!
             if i != ai || j != aj {
                 activeKeys[touch!]=nil
-                releaseKey(ai,aj)
+                
                 activeKeys[touch!]=(i,j)
                 pressKey(i,j,lastVel)
+                releaseKey(ai,aj)
                 flag = true
             }
         }

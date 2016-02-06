@@ -29,6 +29,8 @@ class ConfigViewController: UIViewController {
     @IBOutlet weak var sliderPB: UISlider!
     @IBOutlet weak var labelPB: UILabel!
     
+    @IBOutlet weak var diagonalSlider: UISlider!
+    
     let rangeVel = RangeSlider(frame: CGRectZero)
     
     let baseNote : [Int] = [31,33,35,36,38,40,41,43]
@@ -55,6 +57,7 @@ class ConfigViewController: UIViewController {
         sliderPB.value = pitchBendRange
         labelPB.text = "PB Range \(Int(pitchBendRange))"
         segMIDIChannel.selectedSegmentIndex = Int(midiChannel)
+        diagonalSlider.value = Float(diagonalSlide)
 // Do any additional setup after loading the view.
     }
     override func viewDidLayoutSubviews() {
@@ -84,6 +87,7 @@ class ConfigViewController: UIViewController {
         transposition = Int(floor(sliderTranspose.value))
         pitchBendRange = floor(sliderPB.value)
         midiChannel = UInt8(segMIDIChannel.selectedSegmentIndex)
+        diagonalSlide = CGFloat(diagonalSlider.value)
         
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setInteger(gridHeight, forKey: "gridHeight")
@@ -99,6 +103,7 @@ class ConfigViewController: UIViewController {
         defaults.setInteger(transposition, forKey: "transposition")
         defaults.setFloat(pitchBendRange, forKey: "pitchBendRange")
         defaults.setInteger(Int(midiChannel), forKey: "midiChannel")
+        defaults.setFloat(diagonalSlider.value, forKey: "diagonalSlide")
         
         main.generateGrid()
         nav.dismissViewControllerAnimated(true, completion: nil)
