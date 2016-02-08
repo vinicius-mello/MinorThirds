@@ -350,7 +350,9 @@ class ViewController: UIViewController {
         let j : Int = Int((pt.x-2.0)/noteWidth)
         let x = (pt.x-(CGFloat(j)*noteWidth+2.0))
         let y = (pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))
-        if (abs(x-0.0)+abs(y-0.0))<gap {
+        let c1 = (abs(x-0.0)+abs(y-0.0))<gap
+        let c2 = sqrt((x-noteWidth)*(x-noteWidth)+(y-0.0)*(y-0.0))<gap
+        if c1 || c2 {
             return UInt8(minVel)
         }
         let vel = max(0.0,1.0-(pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))/noteHeight)
