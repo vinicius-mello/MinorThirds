@@ -3,13 +3,12 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MinorThirds" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
@@ -32,49 +31,21 @@
                                     <segue destination="LYw-Jt-9f3" kind="presentation" id="hyT-Wm-60T"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JCY-Th-ZMe">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Chords">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="ZAa-md-MGE" kind="presentation" id="C3Z-Zl-QUs"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.50196078431372548" green="0.25098039215686274" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JCY-Th-ZMe" secondAttribute="bottom" constant="8" id="izV-nE-JMI"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="JCY-Th-ZMe" secondAttribute="trailing" constant="-15" id="jwY-7J-Xdi"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JCY-Th-ZMe" secondAttribute="bottom" constant="-5" id="s6g-2h-1Um"/>
-                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="g98-48-ZI4"/>
-                                <exclude reference="JCY-Th-ZMe"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="izV-nE-JMI"/>
-                                <exclude reference="s6g-2h-1Um"/>
-                                <exclude reference="jwY-7J-Xdi"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=regular">
                             <mask key="subviews">
                                 <include reference="g98-48-ZI4"/>
-                                <include reference="JCY-Th-ZMe"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="izV-nE-JMI"/>
-                                <include reference="s6g-2h-1Um"/>
-                                <include reference="jwY-7J-Xdi"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="aPu-DP-3Y2"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="888.75" y="186"/>
         </scene>
@@ -92,7 +63,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6T4-c6-F6v">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Back to Keyboard">
+                                <state key="normal" title="Back to Config">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -463,6 +434,20 @@
                                     <rect key="frame" x="472" y="48" width="154" height="31"/>
                                 </variation>
                             </slider>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ep-FJ-KCJ">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <size key="titleShadowOffset" width="2.2250738585072014e-308" height="2.2250738585072014e-308"/>
+                                <state key="normal" title="Chords">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="574" y="533" width="50" height="30"/>
+                                </variation>
+                                <connections>
+                                    <segue destination="ZAa-md-MGE" kind="presentation" id="XD0-8s-cSf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
@@ -493,6 +478,7 @@
                                 <exclude reference="lKj-Mq-VGO"/>
                                 <exclude reference="BlO-fC-7WV"/>
                                 <exclude reference="10F-yu-tof"/>
+                                <exclude reference="8ep-FJ-KCJ"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=regular">
@@ -523,6 +509,7 @@
                                 <include reference="lKj-Mq-VGO"/>
                                 <include reference="BlO-fC-7WV"/>
                                 <include reference="10F-yu-tof"/>
+                                <include reference="8ep-FJ-KCJ"/>
                             </mask>
                         </variation>
                     </view>

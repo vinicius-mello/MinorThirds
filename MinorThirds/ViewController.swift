@@ -31,21 +31,21 @@ let colorSchemes : [String : ColorScheme] = [
     "Rose" : ColorScheme(
         C: UIColor(rgba: "#F1D4AF").CGColor
         ,
-        CFG: UIColor(rgba: "#774F38").CGColor,
+        CFG: UIColor(rgba: "#000000").CGColor,
         BlackNote: UIColor(rgba: "#E08E79").CGColor,
-        BlackNoteFG: UIColor(rgba: "#C5E0DC").CGColor,
+        BlackNoteFG: UIColor(rgba: "#000000").CGColor,
         WhiteNote: UIColor(rgba: "#ECE5CE").CGColor,
-        WhiteNoteFG: UIColor(rgba: "#E08E79").CGColor,
+        WhiteNoteFG: UIColor(rgba: "#000000").CGColor,
         Background: UIColor(rgba: "#774F38").CGColor
     ),
     "Green" : ColorScheme(
         C: UIColor(rgba: "#7C8A79").CGColor
         ,
-        CFG: UIColor(rgba: "#FEFEFC").CGColor,
+        CFG: UIColor(rgba: "#000000").CGColor,
         BlackNote: UIColor(rgba: "#537B85").CGColor,
-        BlackNoteFG: UIColor(rgba: "#FEFEFC").CGColor,
+        BlackNoteFG: UIColor(rgba: "#000000").CGColor,
         WhiteNote: UIColor(rgba: "#C3D1D1").CGColor,
-        WhiteNoteFG: UIColor(rgba: "#3C5760").CGColor,
+        WhiteNoteFG: UIColor(rgba: "#000000").CGColor,
         Background: UIColor(rgba: "#210A02").CGColor
     ),
     "Blue" : ColorScheme(
@@ -117,6 +117,7 @@ set {
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var chordsButton: UIButton!
     var extraKeys : [(Int,Int)] = []
     var incompletePosition : Bool = false
     var lastVel : UInt8 = 0
@@ -137,10 +138,13 @@ class ViewController: UIViewController {
     var pedalLabel : CALayer = CALayer()
     var chordLabelShadow : CATextLayer = CATextLayer()
     var pedalOn : Bool = false
+    var octaveShift : Int = 0
     var activeNotes : [Bool] = [Bool](count: 128, repeatedValue: false)
+    var gridNote : [[Int]]! = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //genChordTable()
         UIApplication.sharedApplication().statusBarHidden = true
         let defaults = NSUserDefaults.standardUserDefaults()
         
@@ -223,8 +227,10 @@ class ViewController: UIViewController {
     }
     
     func setupGrid() {
+        var gni = [[Int]]()
         var gi = [[CAShapeLayer]]()
         for _ in 0..<16 {
+            var gnj = [Int]()
             var gj = [CAShapeLayer]()
             for _ in 0..<16 {
                 let g = CAShapeLayer()
@@ -232,10 +238,13 @@ class ViewController: UIViewController {
                 let text = CATextLayer()
                 g.addSublayer(text)
                 gj.append(g)
+                gnj.append(0)
             }
             gi.append(gj)
+            gni.append(gnj)
         }
         grid = gi
+        gridNote = gni
     }
     
     func showGrid() {
@@ -311,6 +320,18 @@ class ViewController: UIViewController {
                 //g.opaque = true
             }
         }
+        let gd=grid![gridHeight-1][0]
+        let textd : CATextLayer = gd.sublayers!.first as! CATextLayer
+        textd.fontSize = 28
+        textd.string = "▼"
+        textd.foregroundColor = UIColor.blackColor().CGColor
+        gd.fillColor = UIColor(rgba: "#DFDFDF").CGColor
+        let gu=grid![gridHeight-1][1]
+        let textu : CATextLayer = gu.sublayers!.first as! CATextLayer
+        textu.fontSize = 28
+        textu.string = "▲"
+        textu.foregroundColor = UIColor.blackColor().CGColor
+        gu.fillColor = UIColor(rgba: "#DFDFDF").CGColor
     }
     
     func generateGrid() {
@@ -319,7 +340,7 @@ class ViewController: UIViewController {
     }
     
     func midiNote( i : Int, _ j : Int) -> Int {
-        return 3*j+i+baseMidiNote
+        return 3*j+i+baseMidiNote+octaveShift
     }
     
     func locationToGrid(pt : CGPoint) -> (Int,Int) {
@@ -384,11 +405,32 @@ class ViewController: UIViewController {
         }
     }
     
+    func octaveUp() {
+        if octaveShift < 24 {
+            octaveShift = octaveShift + 12
+            setupNotes()
+        }
+    }
+    
+    func octaveDown() {
+        if octaveShift > -24 {
+            octaveShift = octaveShift - 12
+            setupNotes()
+        }
+    }
     func pressKey(i : Int, _ j : Int, _ vel : UInt8) {
-        let m = midiNote(i, j)
         if (i>=0 && i<gridHeight) && (j>=0 && j<gridWidth) {
             grid![i][j].opacity = 0.5
         }
+        if j==0 && i==(gridHeight-1) {
+            octaveDown()
+            return
+        } else if j==1 && i==(gridHeight-1) {
+            octaveUp()
+            return
+        }
+        let m = midiNote(i, j)
+        gridNote[i][j] = m
         if activeNotes[m] {
             midiNoteOff(m)
         } else {
@@ -398,7 +440,8 @@ class ViewController: UIViewController {
     }
     
     func releaseKey(i : Int, _ j : Int) {
-        let m = midiNote(i, j)
+        let m = gridNote[i][j]
+        gridNote[i][j] = 0
         if (i>=0 && i<gridHeight) && (j>=0 && j<gridWidth) {
             grid![i][j].opacity = 1.0
         }
@@ -486,9 +529,16 @@ class ViewController: UIViewController {
     
     func identifyChord() -> Bool {
         var keys : [(Int,Int)] = []
+        var notes : [Int] = []
         for (_,k) in activeKeys {
+            if (k.0==(gridHeight-1)&&(k.1==0)) ||
+                (k.0==(gridHeight-1)&&(k.1==1)) {
+                    continue
+            }
             keys.append(k)
+            notes.append(midiNote(k.0,k.1))
         }
+        notes = listChord(notes)
         keys.sortInPlace { $0.1 == $1.1 ? $0.0 < $1.0 : $0.1 < $1.1 }
         var strKeys : String = ""
         let bass = keys[0]
@@ -528,7 +578,7 @@ class ViewController: UIViewController {
                 return true
             }
         }
-        if triads {
+        /*if triads {
             if let chord = triadTable[strKeys] {
                 currentChord = chord.0
                 let (ri,rj) = keys[chord.1]
@@ -537,15 +587,24 @@ class ViewController: UIViewController {
                 //currentScale = chordScale(currentChord!,7)[0]
                 return true
             }
-        }
-        if let chord = positionTable[strKeys] {
+        }*/
+        /*if let chord = positionTable[strKeys] {
             currentChord = chord.0
             let (ri,rj) = keys[chord.1]
             currentRoot = midiNote(ri,rj) % 12
             currentBass = midiNote(bass.0,bass.1) % 12
             //currentScale = chordScale(currentChord!,7)[0]
             return true
-        } else {
+        }*/
+        print(notesToString(notes))
+        if let chord = chordTable[notesToString(notes)] {
+            currentChord = chord.0
+            currentBass = midiNote(bass.0,bass.1) % 12
+            currentRoot = (currentBass + notes[chord.1]) % 12
+            //currentScale = chordScale(currentChord!,7)[0]
+            return true
+        }
+        else {
             currentChord = nil
             currentRoot = 0
             currentBass = 0
