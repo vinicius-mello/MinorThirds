@@ -76,11 +76,14 @@ var currentColorScheme : String = "Rose"
 var accidental : Int = 0
 var transposition : Int = 0
 var midiChannel : UInt8 = 0
+var midiBassChannel : UInt8 = 1
 var _bending = false
 var bendingBase : CGFloat = 0
 var _bendingDelta : CGFloat = 0
 var pitchBendRange : Float = 0
 var diagonalSlide : CGFloat = 0.15
+var cornerI : Int = 6
+var cornerJ : Int = 5
 
 func pitchWheel(channel : Int, delta : Float) {
     //print("pw: \(delta)")
@@ -129,6 +132,7 @@ class ViewController: UIViewController {
     var gap : CGFloat = 0.0
     var notesCount : Int = 0
     var activeKeys : [UITouch : (Int,Int)] = [:]
+    var timeKey : [UITouch : NSTimeInterval ] = [:]
     var currentChord : ChordType? = nil
     var currentRoot : Int = 0
     var currentBass : Int = 0
@@ -187,10 +191,18 @@ class ViewController: UIViewController {
         if let defaultMidiChannel = defaults.objectForKey("midiChannel") as? Int {
             midiChannel = UInt8(defaultMidiChannel)
         }
+        if let defaultMidiBassChannel = defaults.objectForKey("midiBassChannel") as? Int {
+            midiBassChannel = UInt8(defaultMidiBassChannel)
+        }
         if let defaultDiagonalSlide = defaults.objectForKey("diagonalSlide") as? Float {
             diagonalSlide = CGFloat(defaultDiagonalSlide)
         }
-        
+        if let defaultCornerI = defaults.objectForKey("cornerI") as? Int {
+            cornerI = defaultCornerI
+        }
+        if let defaultCornerJ = defaults.objectForKey("cornerJ") as? Int {
+            cornerJ = defaultCornerJ
+        }
         setupGrid()
         showGrid()
         setupNotes()
@@ -254,6 +266,11 @@ class ViewController: UIViewController {
                     grid![i][j].hidden = false
                 } else {
                     grid![i][j].hidden = true
+                }
+                if i<cornerI && j<cornerJ {
+                    grid![i][j].opacity = 0.7
+                } else {
+                    grid![i][j].opacity = 1.0
                 }
             }
         }
@@ -431,22 +448,36 @@ class ViewController: UIViewController {
         }
         let m = midiNote(i, j)
         gridNote[i][j] = m
+        let channel = keyChannel(i,j)
         if activeNotes[m] {
-            midiNoteOff(m)
+            midiNoteOff(m, channel: channel)
         } else {
             activeNotes[m]=true
         }
-        midiNoteOn(m,vel)
+        midiNoteOn(m, channel: channel, vel)
+    }
+    
+    func keyChannel(i : Int, _ j : Int) -> UInt8 {
+        if(i<cornerI && j<cornerJ) {
+            return midiBassChannel
+        } else {
+            return midiChannel
+        }
     }
     
     func releaseKey(i : Int, _ j : Int) {
         let m = gridNote[i][j]
         gridNote[i][j] = 0
         if (i>=0 && i<gridHeight) && (j>=0 && j<gridWidth) {
-            grid![i][j].opacity = 1.0
+            if i<cornerI && j<cornerJ {
+                grid![i][j].opacity = 0.7
+            } else {
+                grid![i][j].opacity = 1.0
+            }
         }
+        let channel = keyChannel(i,j)
         if activeNotes[m] {
-            midiNoteOff(m)
+            midiNoteOff(m, channel: channel)
             activeNotes[m]=false
         }
     }
@@ -455,15 +486,15 @@ class ViewController: UIViewController {
         return currentScale[(m+(12-currentRoot))%12]
     }
     
-    func midiNoteOn(m : Int, _ vel : UInt8) {
+    func midiNoteOn(m : Int, channel : UInt8, _ vel : UInt8) {
         //println("midi on: \(midiToName(m)),\(vel)")
-        midi.sendBytes([0x90|midiChannel,UInt8(m+transposition),vel])
+        midi.sendBytes([0x90|channel,UInt8(m+transposition),vel])
         lastVel = vel
     }
     
-    func midiNoteOff(m : Int) {
+    func midiNoteOff(m : Int, channel : UInt8) {
         //println("midi off: \(midiToName(m))")
-        midi.sendBytes([0x80|midiChannel,UInt8(m+transposition),0])
+        midi.sendBytes([0x80|channel,UInt8(m+transposition),0])
     }
     
     
@@ -644,6 +675,7 @@ class ViewController: UIViewController {
             let (i,j) = locationToGrid(pt)
             let vel = locationToVel(pt)
             activeKeys[touch!]=(i,j)
+            timeKey[touch!]=touch!.timestamp
             pressKey(i,j,vel)
         }
         detectedChord()
@@ -656,6 +688,7 @@ class ViewController: UIViewController {
             //let pt = touch!.locationInView(self.view)
             let (i,j) = activeKeys[touch!]!
             activeKeys[touch!]=nil
+            timeKey[touch!]=nil
             releaseKey(i,j)
         }
         let count = activeKeys.count
@@ -684,12 +717,17 @@ class ViewController: UIViewController {
         for t: NSObject in touches {
             let touch = t as? UITouch
             let pt = touch!.locationInView(self.view)
+            let ppt = touch!.previousLocationInView(self.view)
+            let delta = touch!.timestamp-timeKey[touch!]!
+            //print(floor(100.0*abs(pt.x-ppt.x)/CGFloat(delta)))
             let (i,j) = locationToGrid(pt)
             let (ai,aj) = activeKeys[touch!]!
             if i != ai || j != aj {
                 activeKeys[touch!]=nil
+                timeKey[touch!]=nil
                 
                 activeKeys[touch!]=(i,j)
+                timeKey[touch!]=touch!.timestamp
                 pressKey(i,j,lastVel)
                 releaseKey(ai,aj)
                 flag = true
@@ -708,6 +746,7 @@ class ViewController: UIViewController {
             //let pt = touch!.locationInView(self.view)
             let (i,j) = activeKeys[touch!]!
             activeKeys[touch!]=nil
+            timeKey[touch!]=nil
             releaseKey(i,j)
         }
         if activeKeys.isEmpty {

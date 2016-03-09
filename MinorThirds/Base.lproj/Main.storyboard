@@ -8,7 +8,6 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MinorThirds" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
@@ -46,6 +45,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="aPu-DP-3Y2"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="888.75" y="186"/>
         </scene>
@@ -365,10 +365,46 @@
                                     <rect key="frame" x="48" y="418" width="114" height="21"/>
                                 </variation>
                             </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fcB-A7-J8X">
+                                <rect key="frame" x="-61" y="-14" width="123" height="29"/>
+                                <segments>
+                                    <segment title="1"/>
+                                    <segment title="2"/>
+                                    <segment title="3"/>
+                                    <segment title="4"/>
+                                    <segment title="5"/>
+                                    <segment title="6"/>
+                                    <segment title="7"/>
+                                    <segment title="8"/>
+                                    <segment title="9"/>
+                                    <segment title="10"/>
+                                </segments>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="207" y="462" width="417" height="29"/>
+                                </variation>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bass MIDI Channel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lv6-2d-9U3">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="48" y="464" width="151" height="21"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Split Corner (x,y)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQC-0l-eDf">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="48" y="505" width="151" height="21"/>
+                                </variation>
+                            </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-12" maxValue="12" translatesAutoresizingMaskIntoConstraints="NO" id="1XC-Hk-xgm">
                                 <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="205" y="464" width="421" height="31"/>
+                                    <rect key="frame" x="206" y="540" width="421" height="31"/>
                                 </variation>
                                 <connections>
                                     <action selector="tranposeChange:" destination="LYw-Jt-9f3" eventType="valueChanged" id="CqN-ph-LfS"/>
@@ -380,7 +416,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="48" y="464" width="137" height="21"/>
+                                    <rect key="frame" x="49" y="540" width="137" height="21"/>
                                 </variation>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eGb-LF-zrF">
@@ -413,7 +449,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="276" y="533" width="121" height="30"/>
+                                    <rect key="frame" x="276" y="628" width="121" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="returnToKeys:" destination="LYw-Jt-9f3" eventType="touchUpInside" id="1NF-Tm-Dms"/>
@@ -442,12 +478,30 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="widthClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="574" y="533" width="50" height="30"/>
+                                    <rect key="frame" x="574" y="628" width="50" height="30"/>
                                 </variation>
                                 <connections>
                                     <segue destination="ZAa-md-MGE" kind="presentation" id="XD0-8s-cSf"/>
                                 </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ome-Mf-b3D">
+                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="206" y="502" width="194" height="31"/>
+                                </variation>
+                                <connections>
+                                    <action selector="cornerIChanged:" destination="LYw-Jt-9f3" eventType="valueChanged" id="xW2-pZ-582"/>
+                                </connections>
+                            </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2dd-dT-O2j">
+                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="432" y="499" width="194" height="31"/>
+                                </variation>
+                                <connections>
+                                    <action selector="cornerJChanged:" destination="LYw-Jt-9f3" eventType="valueChanged" id="QcS-on-zjq"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
@@ -470,6 +524,9 @@
                                 <exclude reference="rCW-H8-KE0"/>
                                 <exclude reference="pee-5h-gMg"/>
                                 <exclude reference="r0S-50-1h5"/>
+                                <exclude reference="fcB-A7-J8X"/>
+                                <exclude reference="Lv6-2d-9U3"/>
+                                <exclude reference="kQC-0l-eDf"/>
                                 <exclude reference="1XC-Hk-xgm"/>
                                 <exclude reference="abn-vu-nci"/>
                                 <exclude reference="eGb-LF-zrF"/>
@@ -479,6 +536,8 @@
                                 <exclude reference="BlO-fC-7WV"/>
                                 <exclude reference="10F-yu-tof"/>
                                 <exclude reference="8ep-FJ-KCJ"/>
+                                <exclude reference="Ome-Mf-b3D"/>
+                                <exclude reference="2dd-dT-O2j"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=regular">
@@ -501,6 +560,9 @@
                                 <include reference="rCW-H8-KE0"/>
                                 <include reference="pee-5h-gMg"/>
                                 <include reference="r0S-50-1h5"/>
+                                <include reference="fcB-A7-J8X"/>
+                                <include reference="Lv6-2d-9U3"/>
+                                <include reference="kQC-0l-eDf"/>
                                 <include reference="1XC-Hk-xgm"/>
                                 <include reference="abn-vu-nci"/>
                                 <include reference="eGb-LF-zrF"/>
@@ -510,19 +572,27 @@
                                 <include reference="BlO-fC-7WV"/>
                                 <include reference="10F-yu-tof"/>
                                 <include reference="8ep-FJ-KCJ"/>
+                                <include reference="Ome-Mf-b3D"/>
+                                <include reference="2dd-dT-O2j"/>
                             </mask>
                         </variation>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="800" height="800"/>
                     <connections>
                         <outlet property="diagonalSlider" destination="10F-yu-tof" id="4fZ-LZ-ovZ"/>
+                        <outlet property="labelCorner" destination="kQC-0l-eDf" id="Eiv-Wo-9Ri"/>
                         <outlet property="labelPB" destination="J4v-zY-5mF" id="3a8-iW-UDY"/>
                         <outlet property="labelTranspose" destination="abn-vu-nci" id="ztp-Qg-BSB"/>
                         <outlet property="segAccidental" destination="LPn-VB-Mva" id="fKS-W0-UwN"/>
                         <outlet property="segBaseNote" destination="Rko-xd-zVj" id="cSd-yB-xir"/>
+                        <outlet property="segBassMIDIChannel" destination="fcB-A7-J8X" id="Hwe-VZ-ROM"/>
                         <outlet property="segColorScheme" destination="7o8-pC-qeu" id="8is-27-Ca3"/>
                         <outlet property="segHeight" destination="qBk-oQ-zf6" id="lc9-Xk-cnr"/>
                         <outlet property="segMIDIChannel" destination="pee-5h-gMg" id="IPJ-dZ-ItS"/>
                         <outlet property="segWidth" destination="f6A-9i-Pnk" id="q4l-5k-98B"/>
+                        <outlet property="sliderCornerI" destination="Ome-Mf-b3D" id="sQk-ov-0ih"/>
+                        <outlet property="sliderCornerJ" destination="2dd-dT-O2j" id="pE0-UJ-5vo"/>
                         <outlet property="sliderPB" destination="HMh-CX-mzW" id="qeh-jL-NPQ"/>
                         <outlet property="sliderTranspose" destination="1XC-Hk-xgm" id="d8I-3c-kj5"/>
                         <outlet property="switchIncompleteChords" destination="TyM-Co-3Sp" id="ZZW-6H-FdH"/>

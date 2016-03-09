@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		810A704F1C85D78D00F3166D /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E3BD1D1B4C7E9100359B78 /* CoreMIDI.framework */; };
 		813150B21B457B6900A39CC1 /* VirtualMidiSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 813150B11B457B6900A39CC1 /* VirtualMidiSource.m */; };
 		8174F4B61B4612BB00FF3B70 /* ChordTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8174F4B51B4612BB00FF3B70 /* ChordTable.swift */; };
 		8174F4B81B46142700FF3B70 /* UIColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8174F4B71B46142700FF3B70 /* UIColorHex.swift */; };
@@ -17,7 +18,6 @@
 		81A8BA6A1B4452960069DB83 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A8BA691B4452960069DB83 /* Images.xcassets */; };
 		81A8BA791B4452960069DB83 /* MinorThirdsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A8BA781B4452960069DB83 /* MinorThirdsTests.swift */; };
 		81E3BD1C1B4C6E7F00359B78 /* ConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E3BD1B1B4C6E7F00359B78 /* ConfigViewController.swift */; };
-		81E3BD1E1B4C7E9100359B78 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E3BD1D1B4C7E9100359B78 /* CoreMIDI.framework */; };
 		81E3BD201B4C7E9C00359B78 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E3BD1F1B4C7E9C00359B78 /* CoreAudioKit.framework */; };
 		81E496A61B4DF16A0073B483 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E496A51B4DF16A0073B483 /* RangeSlider.swift */; };
 		81E496A81B5156C40073B483 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E496A71B5156C40073B483 /* MasterViewController.swift */; };
@@ -64,7 +64,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81E3BD201B4C7E9C00359B78 /* CoreAudioKit.framework in Frameworks */,
-				81E3BD1E1B4C7E9100359B78 /* CoreMIDI.framework in Frameworks */,
+				810A704F1C85D78D00F3166D /* CoreMIDI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

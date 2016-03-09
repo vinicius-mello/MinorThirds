@@ -23,11 +23,17 @@ class ConfigViewController: UIViewController {
     
     @IBOutlet weak var segMIDIChannel: UISegmentedControl!
     
+    @IBOutlet weak var segBassMIDIChannel: UISegmentedControl!
+    
     @IBOutlet weak var sliderTranspose: UISlider!
     @IBOutlet weak var labelTranspose: UILabel!
     
     @IBOutlet weak var sliderPB: UISlider!
     @IBOutlet weak var labelPB: UILabel!
+    
+    @IBOutlet weak var labelCorner: UILabel!
+    @IBOutlet weak var sliderCornerI: UISlider!
+    @IBOutlet weak var sliderCornerJ: UISlider!
     
     @IBOutlet weak var diagonalSlider: UISlider!
     
@@ -57,7 +63,11 @@ class ConfigViewController: UIViewController {
         sliderPB.value = pitchBendRange
         labelPB.text = "PB Range \(Int(pitchBendRange))"
         segMIDIChannel.selectedSegmentIndex = Int(midiChannel)
+        segBassMIDIChannel.selectedSegmentIndex = Int(midiBassChannel)
         diagonalSlider.value = Float(diagonalSlide)
+        sliderCornerI.value = Float(cornerI)/Float(gridHeight)
+        sliderCornerJ.value = Float(cornerJ)/Float(gridWidth)
+        labelCorner.text = "Split Corner (\(cornerI),\(cornerJ))"
 // Do any additional setup after loading the view.
     }
     override func viewDidLayoutSubviews() {
@@ -87,6 +97,7 @@ class ConfigViewController: UIViewController {
         transposition = Int(floor(sliderTranspose.value))
         pitchBendRange = floor(sliderPB.value)
         midiChannel = UInt8(segMIDIChannel.selectedSegmentIndex)
+        midiBassChannel = UInt8(segBassMIDIChannel.selectedSegmentIndex)
         diagonalSlide = CGFloat(diagonalSlider.value)
         
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -103,8 +114,10 @@ class ConfigViewController: UIViewController {
         defaults.setInteger(transposition, forKey: "transposition")
         defaults.setFloat(pitchBendRange, forKey: "pitchBendRange")
         defaults.setInteger(Int(midiChannel), forKey: "midiChannel")
+        defaults.setInteger(Int(midiBassChannel), forKey: "midiBassChannel")
         defaults.setFloat(diagonalSlider.value, forKey: "diagonalSlide")
-        
+        defaults.setInteger(cornerI, forKey: "cornerI")
+        defaults.setInteger(cornerJ, forKey: "cornerJ")
         main.generateGrid()
         nav.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -119,6 +132,15 @@ class ConfigViewController: UIViewController {
         labelPB.text = "PB Range \(value)"
     }
     
+    @IBAction func cornerIChanged(sender: AnyObject) {
+        cornerI = Int(floor(sliderCornerI.value*Float(gridHeight)))
+        labelCorner.text = "Split Corner (\(cornerI),\(cornerJ))"
+    }
+    
+    @IBAction func cornerJChanged(sender: AnyObject) {
+        cornerJ = Int(floor(sliderCornerJ.value*Float(gridWidth)))
+        labelCorner.text = "Split Corner (\(cornerI),\(cornerJ))"
+    }
     /*
     @objc func doneAction() {
         //midi = VirtualSourceMidi("MinorThirds")

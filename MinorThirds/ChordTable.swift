@@ -868,6 +868,7 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,3,9" : (Cmb5,2),
     "0,6,15" : (Cmb5,0),
     "0,9,15" : (Cmb5,1),
+    "0,6,9" : (Cmb5,1),
     "0,3,7,8" : (Cmb6,0),
 ]
 func listChord(var notes: [Int]) -> [Int] {
