@@ -145,6 +145,7 @@ class ViewController: UIViewController {
     var octaveShift : Int = 0
     var activeNotes : [Bool] = [Bool](count: 128, repeatedValue: false)
     var gridNote : [[Int]]! = nil
+    let scale : CGFloat = (UIScreen.mainScreen().scale)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -218,6 +219,7 @@ class ViewController: UIViewController {
         chordLabelShadow.backgroundColor = UIColor.clearColor().CGColor
         chordLabelShadow.foregroundColor = UIColor.blackColor().CGColor
         chordLabelShadow.opacity = 0.9
+        chordLabelShadow.contentsScale = scale
         l.addSublayer(chordLabel)
         chordLabel.frame = CGRectMake(50,50,900,300)
         chordLabel.fontSize = 108
@@ -227,6 +229,7 @@ class ViewController: UIViewController {
         chordLabel.backgroundColor = UIColor.clearColor().CGColor
         chordLabel.foregroundColor = UIColor.whiteColor().CGColor
         chordLabel.opacity = 1.0
+        chordLabel.contentsScale = scale
         
         let pedalImage = UIImage(named: "Pedal.png")!
         //println(pedalImage)
@@ -234,6 +237,7 @@ class ViewController: UIViewController {
         pedalLabel.frame = CGRectMake(860,86,90,59)
         pedalLabel.opacity=1.0
         pedalLabel.hidden = true
+        pedalLabel.contentsScale = scale
         //pedalLabel.backgroundColor = UIColor.redColor().CGColor
         l.addSublayer(pedalLabel)
     }
@@ -322,6 +326,7 @@ class ViewController: UIViewController {
                 text.backgroundColor = UIColor.clearColor().CGColor
                 text.frame = CGRect(x: 0, y: gap, width: noteWidth, height: noteHeight-gap)
                 text.alignmentMode = kCAAlignmentCenter
+                text.contentsScale = scale
                 g.strokeColor = UIColor.blackColor().CGColor
                 g.lineWidth = 3.0
                 if blackNote(m) {
@@ -342,12 +347,14 @@ class ViewController: UIViewController {
         textd.fontSize = 28
         textd.string = "▼"
         textd.foregroundColor = UIColor.blackColor().CGColor
+        textd.contentsScale = scale
         gd.fillColor = UIColor(rgba: "#DFDFDF").CGColor
         let gu=grid![gridHeight-1][1]
         let textu : CATextLayer = gu.sublayers!.first as! CATextLayer
         textu.fontSize = 28
         textu.string = "▲"
         textu.foregroundColor = UIColor.blackColor().CGColor
+        textu.contentsScale = scale
         gu.fillColor = UIColor(rgba: "#DFDFDF").CGColor
     }
     
