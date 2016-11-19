@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Vinicius Mello. All rights reserved.
 //
 
-func noteName(note: Int) -> String {
+func noteName(_ note: Int) -> String {
     let notesFlat = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"]
     let notesSharp = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
     let notesMixed = ["C","C#","D","Eb","E","F","F#","G","G#","A","Bb","B"]
@@ -23,7 +23,7 @@ func noteName(note: Int) -> String {
     return "err"
 }
 
-func midiToName(note : Int) -> String {
+func midiToName(_ note : Int) -> String {
     let oct : Int = note/12 - 1
     if note <= 0 {
         return "n/a"
@@ -32,7 +32,7 @@ func midiToName(note : Int) -> String {
     }
 }
 
-func blackNote(i : Int) -> Bool {
+func blackNote(_ i : Int) -> Bool {
     let r = i % 12
     switch r {
     case 1, 3, 6, 8, 10:
@@ -42,16 +42,17 @@ func blackNote(i : Int) -> Bool {
     }
 }
 
-func addCombo(prevCombo: [Int], var pivotList: [Int]) -> [([Int], [Int])] {
+func addCombo(_ prevCombo: [Int], pivotList: [Int]) -> [([Int], [Int])] {
+    var pivotList = pivotList
     
     return (0..<pivotList.count)
         .map {
             _ -> ([Int], [Int]) in
-            (prevCombo + [pivotList.removeAtIndex(0)], pivotList)
+            (prevCombo + [pivotList.remove(at: 0)], pivotList)
     }
 }
 
-func combosOfLength(n: Int, m: Int) -> [[Int]] {
+func combosOfLength(_ n: Int, m: Int) -> [[Int]] {
     
     return [Int](1...m)
         .reduce([([Int](), [Int](0..<n))]) {
@@ -62,8 +63,8 @@ func combosOfLength(n: Int, m: Int) -> [[Int]] {
     }
 }
 
-func chordScale(chord : ChordType, numNotes : Int) -> [[Bool]] {
-    var tones : [Bool] = [Bool](count: 12, repeatedValue: false)
+func chordScale(_ chord : ChordType, numNotes : Int) -> [[Bool]] {
+    var tones : [Bool] = [Bool](repeating: false, count: 12)
     for i in chord.tones {
         tones[i%12]=true
     }
@@ -100,13 +101,13 @@ func chordScale(chord : ChordType, numNotes : Int) -> [[Bool]] {
         }
         numberOfTritones = numberOfTritones / 2
         if numberOfSemi<minSemi {
-            scales.removeAll(keepCapacity: true)
+            scales.removeAll(keepingCapacity: true)
             scales.append(tones)
             minSemi=numberOfSemi
             minTritones=numberOfTritones
         } else if numberOfSemi==minSemi {
             if numberOfTritones<minTritones {
-                scales.removeAll(keepCapacity: true)
+                scales.removeAll(keepingCapacity: true)
                 scales.append(tones)
                 minTritones=numberOfTritones
             } else if numberOfTritones==minTritones {

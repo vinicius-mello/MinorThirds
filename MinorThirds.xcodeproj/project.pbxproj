@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		810A704F1C85D78D00F3166D /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E3BD1D1B4C7E9100359B78 /* CoreMIDI.framework */; };
 		813150B21B457B6900A39CC1 /* VirtualMidiSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 813150B11B457B6900A39CC1 /* VirtualMidiSource.m */; };
+		814F21591D9B5A9100A36FA7 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814F21581D9B5A9100A36FA7 /* Launch.storyboard */; };
 		8174F4B61B4612BB00FF3B70 /* ChordTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8174F4B51B4612BB00FF3B70 /* ChordTable.swift */; };
 		8174F4B81B46142700FF3B70 /* UIColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8174F4B71B46142700FF3B70 /* UIColorHex.swift */; };
 		8174F4BA1B46D3E500FF3B70 /* MusicUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8174F4B91B46D3E500FF3B70 /* MusicUtil.swift */; };
@@ -38,6 +39,7 @@
 		813150B01B457B6900A39CC1 /* VirtualMidiSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualMidiSource.h; sourceTree = "<group>"; };
 		813150B11B457B6900A39CC1 /* VirtualMidiSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VirtualMidiSource.m; sourceTree = "<group>"; };
 		813150B31B457B9700A39CC1 /* MinorThirds-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MinorThirds-Bridging-Header.h"; sourceTree = "<group>"; };
+		814F21581D9B5A9100A36FA7 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		8174F4B51B4612BB00FF3B70 /* ChordTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChordTable.swift; sourceTree = "<group>"; };
 		8174F4B71B46142700FF3B70 /* UIColorHex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorHex.swift; sourceTree = "<group>"; };
 		8174F4B91B46D3E500FF3B70 /* MusicUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicUtil.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				81E496A51B4DF16A0073B483 /* RangeSlider.swift */,
 				81E496A71B5156C40073B483 /* MasterViewController.swift */,
 				81E496A91B5158130073B483 /* DetailViewController.swift */,
+				814F21581D9B5A9100A36FA7 /* Launch.storyboard */,
 			);
 			path = MinorThirds;
 			sourceTree = "<group>";
@@ -197,9 +200,11 @@
 					81A8BA5C1B4452960069DB83 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = PL9LWQQFTA;
+						LastSwiftMigration = 0800;
 					};
 					81A8BA711B4452960069DB83 = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0800;
 						TestTargetID = 81A8BA5C1B4452960069DB83;
 					};
 				};
@@ -230,6 +235,7 @@
 			files = (
 				81A8BA681B4452960069DB83 /* Main.storyboard in Resources */,
 				81A8BA6A1B4452960069DB83 /* Images.xcassets in Resources */,
+				814F21591D9B5A9100A36FA7 /* Launch.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,7 +333,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -366,7 +372,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -381,11 +387,12 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = MinorThirds/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Mello.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MinorThirds/MinorThirds-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -397,11 +404,12 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = MinorThirds/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Mello.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MinorThirds/MinorThirds-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
@@ -422,6 +430,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Mello.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MinorThirds.app/MinorThirds";
 			};
 			name = Debug;
@@ -438,6 +447,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Mello.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MinorThirds.app/MinorThirds";
 			};
 			name = Release;

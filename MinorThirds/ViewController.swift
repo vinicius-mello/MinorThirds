@@ -9,6 +9,32 @@
 import QuartzCore
 import CoreMIDI
 import UIKit
+import CoreMotion
+
+enum UIUserInterfaceIdiom : Int
+{
+    case Unspecified
+    case Phone
+    case Pad
+}
+
+struct ScreenSize
+{
+    static let SCREEN_WIDTH         = UIScreen.main.bounds.size.width
+    static let SCREEN_HEIGHT        = UIScreen.main.bounds.size.height
+    static let SCREEN_MAX_LENGTH    = max(ScreenSize.SCREEN_WIDTH, ScreenSize.SCREEN_HEIGHT)
+    static let SCREEN_MIN_LENGTH    = min(ScreenSize.SCREEN_WIDTH, ScreenSize.SCREEN_HEIGHT)
+}
+
+struct DeviceType
+{
+    static let IS_IPHONE_4_OR_LESS  = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH < 568.0
+    static let IS_IPHONE_5          = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 568.0
+    static let IS_IPHONE_6          = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 667.0
+    static let IS_IPHONE_6P         = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
+    static let IS_IPAD              = UIDevice.current.userInterfaceIdiom == .pad && ScreenSize.SCREEN_MAX_LENGTH == 1024.0
+    static let IS_IPAD_PRO          = UIDevice.current.userInterfaceIdiom == .pad && ScreenSize.SCREEN_MAX_LENGTH >= 1366.0
+}
 
 struct ColorScheme {
     var C : CGColor
@@ -20,52 +46,54 @@ struct ColorScheme {
     var Background : CGColor
 }
 
-let colorC = UIColor(rgba: "#FF9933").CGColor
-let colorCFG = UIColor.whiteColor().CGColor
-let colorBlackNote = UIColor(rgba: "#614051").CGColor // Eggplant
-let colorBlackNoteFG = UIColor.whiteColor().CGColor
-let colorWhiteNote = UIColor(rgba: "#FFFFF0").CGColor // Ivory
-let colorWhiteNoteFG = UIColor.blackColor().CGColor
+let colorC = UIColor(rgba: "#FF9933").cgColor
+let colorCFG = UIColor.white.cgColor
+let colorBlackNote = UIColor(rgba: "#614051").cgColor // Eggplant
+let colorBlackNoteFG = UIColor.white.cgColor
+let colorWhiteNote = UIColor(rgba: "#FFFFF0").cgColor // Ivory
+let colorWhiteNoteFG = UIColor.black.cgColor
 
 let colorSchemes : [String : ColorScheme] = [
     "Rose" : ColorScheme(
-        C: UIColor(rgba: "#F1D4AF").CGColor
+        C: UIColor(rgba: "#F1D4AF").cgColor
         ,
-        CFG: UIColor(rgba: "#000000").CGColor,
-        BlackNote: UIColor(rgba: "#E08E79").CGColor,
-        BlackNoteFG: UIColor(rgba: "#000000").CGColor,
-        WhiteNote: UIColor(rgba: "#ECE5CE").CGColor,
-        WhiteNoteFG: UIColor(rgba: "#000000").CGColor,
-        Background: UIColor(rgba: "#774F38").CGColor
+        CFG: UIColor(rgba: "#000000").cgColor,
+        BlackNote: UIColor(rgba: "#E08E79").cgColor,
+        BlackNoteFG: UIColor(rgba: "#000000").cgColor,
+        WhiteNote: UIColor(rgba: "#ECE5CE").cgColor,
+        WhiteNoteFG: UIColor(rgba: "#000000").cgColor,
+        Background: UIColor(rgba: "#774F38").cgColor
     ),
     "Green" : ColorScheme(
-        C: UIColor(rgba: "#7C8A79").CGColor
+        C: UIColor(rgba: "#7C8A79").cgColor
         ,
-        CFG: UIColor(rgba: "#000000").CGColor,
-        BlackNote: UIColor(rgba: "#537B85").CGColor,
-        BlackNoteFG: UIColor(rgba: "#000000").CGColor,
-        WhiteNote: UIColor(rgba: "#C3D1D1").CGColor,
-        WhiteNoteFG: UIColor(rgba: "#000000").CGColor,
-        Background: UIColor(rgba: "#210A02").CGColor
+        CFG: UIColor(rgba: "#000000").cgColor,
+        BlackNote: UIColor(rgba: "#537B85").cgColor,
+        BlackNoteFG: UIColor(rgba: "#000000").cgColor,
+        WhiteNote: UIColor(rgba: "#C3D1D1").cgColor,
+        WhiteNoteFG: UIColor(rgba: "#000000").cgColor,
+        Background: UIColor(rgba: "#210A02").cgColor
     ),
     "Blue" : ColorScheme(
-        C: UIColor(rgba: "#7094B8").CGColor
+        C: UIColor(rgba: "#7094B8").cgColor
         ,
-        CFG: UIColor(rgba: "#000000").CGColor,
-        BlackNote: UIColor(rgba: "#4C7AB9").CGColor,
-        BlackNoteFG: UIColor(rgba: "#000000").CGColor,
-        WhiteNote: UIColor(rgba: "#B3C7EB").CGColor,
-        WhiteNoteFG: UIColor(rgba: "#000000").CGColor,
-        Background: UIColor(rgba: "#363E52").CGColor
+        CFG: UIColor(rgba: "#000000").cgColor,
+        BlackNote: UIColor(rgba: "#4C7AB9").cgColor,
+        BlackNoteFG: UIColor(rgba: "#000000").cgColor,
+        WhiteNote: UIColor(rgba: "#B3C7EB").cgColor,
+        WhiteNoteFG: UIColor(rgba: "#000000").cgColor,
+        Background: UIColor(rgba: "#363E52").cgColor
     )
 ]
 
-let allNotes = [Bool](count: 12, repeatedValue: true)
+let allNotes = [Bool](repeating: true, count: 12)
 
 var midi = VirtualSourceMidi("MinorThirds")
 
 var gridWidth : Int = 12
+var gridWidthBase : Int = 10
 var gridHeight : Int = 9
+var gridHeightBase : Int = 7
 var baseMidiNote : Int = 36
 var minVel : CGFloat = 64
 var maxVel : CGFloat = 110
@@ -85,12 +113,13 @@ var diagonalSlide : CGFloat = 0.15
 var cornerI : Int = 6
 var cornerJ : Int = 5
 
-func pitchWheel(channel : Int, delta : Float) {
+
+func pitchWheel(_ channel : Int, delta : Float) {
     //print("pw: \(delta)")
     let pitchbend = UInt16(0.5*(1.0+max(-1.0,min(1.0,delta/pitchBendRange)))*0b0011111111111111)
     let pitchbendMSB = UInt8((pitchbend&0b0011111110000000) >> 7)
     let pitchbendLSB = UInt8(pitchbend&0b0000000001111111)
-    midi.sendBytes([0xE0+UInt8(channel),
+    midi?.sendBytes([0xE0+UInt8(channel),
         pitchbendLSB,pitchbendMSB], size: 3)
 }
 
@@ -132,7 +161,7 @@ class ViewController: UIViewController {
     var gap : CGFloat = 0.0
     var notesCount : Int = 0
     var activeKeys : [UITouch : (Int,Int)] = [:]
-    var timeKey : [UITouch : NSTimeInterval ] = [:]
+    var timeKey : [UITouch : TimeInterval ] = [:]
     var currentChord : ChordType? = nil
     var currentRoot : Int = 0
     var currentBass : Int = 0
@@ -143,65 +172,77 @@ class ViewController: UIViewController {
     var chordLabelShadow : CATextLayer = CATextLayer()
     var pedalOn : Bool = false
     var octaveShift : Int = 0
-    var activeNotes : [Bool] = [Bool](count: 128, repeatedValue: false)
+    var activeNotes : [Bool] = [Bool](repeating: false, count: 128)
     var gridNote : [[Int]]! = nil
-    let scale : CGFloat = (UIScreen.mainScreen().scale)
+    let scale : CGFloat = (UIScreen.main.scale)
+    var motionManager : CMMotionManager = CMMotionManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //genChordTable()
-        UIApplication.sharedApplication().statusBarHidden = true
-        let defaults = NSUserDefaults.standardUserDefaults()
+
+        motionManager.startDeviceMotionUpdates()
         
-        if let defaultGridHeight = defaults.objectForKey("gridHeight") as? Int {
-            gridHeight = defaultGridHeight
+        UIApplication.shared.isStatusBarHidden = true
+        let defaults = UserDefaults.standard
+        let w: Double = Double(UIScreen.main.bounds.width)
+        let h: Double = Double(UIScreen.main.bounds.height)
+        let screenHeight: Double = max(w, h)
+        
+        //print(UIScreen.main.nativeBounds)
+        if screenHeight==1366 {
+            gridWidthBase = 13
+            gridHeightBase = 9
         }
-        if let defaultGridWidth = defaults.objectForKey("gridWidth") as? Int {
-            gridWidth = defaultGridWidth
+        if let defaultGridHeight = defaults.object(forKey: "gridHeight") as? Int {
+            gridHeight = max(defaultGridHeight,gridHeightBase)
         }
-        if let defaultBaseMidiNote = defaults.objectForKey("baseMidiNote") as? Int {
+        if let defaultGridWidth = defaults.object(forKey: "gridWidth") as? Int {
+            gridWidth = max(defaultGridWidth,gridWidthBase)
+        }
+        if let defaultBaseMidiNote = defaults.object(forKey: "baseMidiNote") as? Int {
             baseMidiNote = defaultBaseMidiNote
         }
-        if let defaultMinVel = defaults.objectForKey("minVel") as? Float {
+        if let defaultMinVel = defaults.object(forKey: "minVel") as? Float {
             minVel = CGFloat(defaultMinVel)
         }
-        if let defaultMaxVel = defaults.objectForKey("maxVel") as? Float {
+        if let defaultMaxVel = defaults.object(forKey: "maxVel") as? Float {
             maxVel = CGFloat(defaultMaxVel)
         }
-        if let defaultColorScheme = defaults.objectForKey("colorScheme") as? String {
+        if let defaultColorScheme = defaults.object(forKey: "colorScheme") as? String {
             currentColorScheme = defaultColorScheme
         }
-        if let defaultAutoSustain = defaults.objectForKey("autoSustain") as? Bool {
+        if let defaultAutoSustain = defaults.object(forKey: "autoSustain") as? Bool {
             autoSustain = defaultAutoSustain
         }
-        if let defaultTriads = defaults.objectForKey("triads") as? Bool {
+        if let defaultTriads = defaults.object(forKey: "triads") as? Bool {
             triads = defaultTriads
         }
-        if let defaultIncompleteChords = defaults.objectForKey("incompleteChords") as? Bool {
+        if let defaultIncompleteChords = defaults.object(forKey: "incompleteChords") as? Bool {
             fillIncompletePositions = defaultIncompleteChords
         }
-        if let defaultAccidental = defaults.objectForKey("accidental") as? Int {
+        if let defaultAccidental = defaults.object(forKey: "accidental") as? Int {
             accidental = defaultAccidental
         }
-        if let defaultTransposition = defaults.objectForKey("transposition") as? Int {
+        if let defaultTransposition = defaults.object(forKey: "transposition") as? Int {
             transposition = defaultTransposition
         }
-        if let defaultPBRange = defaults.objectForKey("pitchBendRange") as? Float {
+        if let defaultPBRange = defaults.object(forKey: "pitchBendRange") as? Float {
             pitchBendRange = defaultPBRange
         }
-        if let defaultMidiChannel = defaults.objectForKey("midiChannel") as? Int {
+        if let defaultMidiChannel = defaults.object(forKey: "midiChannel") as? Int {
             midiChannel = UInt8(defaultMidiChannel)
         }
-        if let defaultMidiBassChannel = defaults.objectForKey("midiBassChannel") as? Int {
+        if let defaultMidiBassChannel = defaults.object(forKey: "midiBassChannel") as? Int {
             midiBassChannel = UInt8(defaultMidiBassChannel)
         }
-        if let defaultDiagonalSlide = defaults.objectForKey("diagonalSlide") as? Float {
+        if let defaultDiagonalSlide = defaults.object(forKey: "diagonalSlide") as? Float {
             diagonalSlide = CGFloat(defaultDiagonalSlide)
         }
-        if let defaultCornerI = defaults.objectForKey("cornerI") as? Int {
+        if let defaultCornerI = defaults.object(forKey: "cornerI") as? Int {
             cornerI = defaultCornerI
         }
-        if let defaultCornerJ = defaults.objectForKey("cornerJ") as? Int {
+        if let defaultCornerJ = defaults.object(forKey: "cornerJ") as? Int {
             cornerJ = defaultCornerJ
         }
         setupGrid()
@@ -211,32 +252,32 @@ class ViewController: UIViewController {
         let l = self.view.layer
         l.backgroundColor = colorSchemes[currentColorScheme]?.Background
         l.addSublayer(chordLabelShadow)
-        chordLabelShadow.frame = CGRectMake(53,52,900,300)
+        chordLabelShadow.frame = CGRect(x: 53,y: 52,width: 900,height: 300)
         chordLabelShadow.fontSize = 108
-        chordLabelShadow.font = "Verdana"
+        chordLabelShadow.font = "Verdana" as CFTypeRef?
         chordLabelShadow.string = ""
         chordLabelShadow.alignmentMode = kCAAlignmentLeft
-        chordLabelShadow.backgroundColor = UIColor.clearColor().CGColor
-        chordLabelShadow.foregroundColor = UIColor.blackColor().CGColor
+        chordLabelShadow.backgroundColor = UIColor.clear.cgColor
+        chordLabelShadow.foregroundColor = UIColor.black.cgColor
         chordLabelShadow.opacity = 0.9
         chordLabelShadow.contentsScale = scale
         l.addSublayer(chordLabel)
-        chordLabel.frame = CGRectMake(50,50,900,300)
+        chordLabel.frame = CGRect(x: 50,y: 50,width: 900,height: 300)
         chordLabel.fontSize = 108
-        chordLabel.font = "Verdana"
+        chordLabel.font = "Verdana" as CFTypeRef?
         chordLabel.string = ""
         chordLabel.alignmentMode = kCAAlignmentLeft
-        chordLabel.backgroundColor = UIColor.clearColor().CGColor
-        chordLabel.foregroundColor = UIColor.whiteColor().CGColor
+        chordLabel.backgroundColor = UIColor.clear.cgColor
+        chordLabel.foregroundColor = UIColor.white.cgColor
         chordLabel.opacity = 1.0
         chordLabel.contentsScale = scale
         
         let pedalImage = UIImage(named: "Pedal.png")!
         //println(pedalImage)
-        pedalLabel.contents = pedalImage.CGImage!
-        pedalLabel.frame = CGRectMake(860,86,90,59)
+        pedalLabel.contents = pedalImage.cgImage!
+        pedalLabel.frame = CGRect(x: screenHeight-170,y: 86,width: 90,height: 59)
         pedalLabel.opacity=1.0
-        pedalLabel.hidden = true
+        pedalLabel.isHidden = true
         pedalLabel.contentsScale = scale
         //pedalLabel.backgroundColor = UIColor.redColor().CGColor
         l.addSublayer(pedalLabel)
@@ -267,9 +308,9 @@ class ViewController: UIViewController {
         for i in 0..<16 {
             for j in 0..<16 {
                 if i<gridHeight && j<gridWidth {
-                    grid![i][j].hidden = false
+                    grid![i][j].isHidden = false
                 } else {
-                    grid![i][j].hidden = true
+                    grid![i][j].isHidden = true
                 }
                 if i<cornerI && j<cornerJ {
                     grid![i][j].opacity = 0.7
@@ -289,21 +330,21 @@ class ViewController: UIViewController {
         noteHeight = floor(height/CGFloat(gridHeight))
         gap = diagonalSlide * min(noteHeight,noteWidth)
         let path = UIBezierPath()
-        path.moveToPoint(CGPoint(x: gap, y: 0))
-        path.addLineToPoint(CGPoint(x: noteWidth-gap, y:0))
+        path.move(to: CGPoint(x: gap, y: 0))
+        path.addLine(to: CGPoint(x: noteWidth-gap, y:0))
         let pi : CGFloat = 3.14159
-        path.addArcWithCenter(CGPoint(x: noteWidth,y: 0), radius: gap, startAngle: pi, endAngle: pi/2, clockwise: false)
-        path.addLineToPoint(CGPoint(x: noteWidth, y:noteHeight-gap))
+        path.addArc(withCenter: CGPoint(x: noteWidth,y: 0), radius: gap, startAngle: pi, endAngle: pi/2, clockwise: false)
+        path.addLine(to: CGPoint(x: noteWidth, y:noteHeight-gap))
         //path.addArcWithCenter(CGPoint(x: noteWidth,y: noteHeight), radius: gap, startAngle: 3*pi/2, endAngle: pi, clockwise: true)
-        path.addArcWithCenter(CGPoint(x: noteWidth,y: noteHeight), radius: gap, startAngle: 3*pi/2, endAngle: 0, clockwise: true)
-        path.addLineToPoint(CGPoint(x: noteWidth, y:noteHeight+gap))
-        path.addArcWithCenter(CGPoint(x: noteWidth,y: noteHeight), radius: gap, startAngle: pi/2, endAngle: pi, clockwise: true)
-        path.addLineToPoint(CGPoint(x: gap, y:noteHeight))
-        path.addArcWithCenter(CGPoint(x: 0,y: noteHeight), radius: gap, startAngle: 0.0, endAngle: 3*pi/2, clockwise: false)
-        path.addLineToPoint(CGPoint(x: 0, y: gap))
+        path.addArc(withCenter: CGPoint(x: noteWidth,y: noteHeight), radius: gap, startAngle: 3*pi/2, endAngle: 0, clockwise: true)
+        path.addLine(to: CGPoint(x: noteWidth, y:noteHeight+gap))
+        path.addArc(withCenter: CGPoint(x: noteWidth,y: noteHeight), radius: gap, startAngle: pi/2, endAngle: pi, clockwise: true)
+        path.addLine(to: CGPoint(x: gap, y:noteHeight))
+        path.addArc(withCenter: CGPoint(x: 0,y: noteHeight), radius: gap, startAngle: 0.0, endAngle: 3*pi/2, clockwise: false)
+        path.addLine(to: CGPoint(x: 0, y: gap))
 //        path.addArcWithCenter(CGPoint(x: 0,y: 0), radius: gap, startAngle: pi/2, endAngle: 0, clockwise: false)
   
-        path.closePath()
+        path.close()
 
         
         let colorC = colorSchemes[currentColorScheme]?.C
@@ -316,18 +357,18 @@ class ViewController: UIViewController {
         for i in 0..<gridHeight {
             for j in 0..<gridWidth {
                 let g=grid![i][j]
-                g.path = path.CGPath
+                g.path = path.cgPath
                 g.transform = CATransform3DMakeTranslation(CGFloat(j)*noteWidth+2.0, CGFloat(gridHeight-1-i)*noteHeight+2.0, 0)
                 let m = midiNote(i,j)
                 let text : CATextLayer = g.sublayers!.first as! CATextLayer
                 text.string = midiToName(m)
                 text.fontSize = 20
-                text.font = "Verdana"
-                text.backgroundColor = UIColor.clearColor().CGColor
+                text.font = "Verdana" as CFTypeRef?
+                text.backgroundColor = UIColor.clear.cgColor
                 text.frame = CGRect(x: 0, y: gap, width: noteWidth, height: noteHeight-gap)
                 text.alignmentMode = kCAAlignmentCenter
                 text.contentsScale = scale
-                g.strokeColor = UIColor.blackColor().CGColor
+                g.strokeColor = UIColor.black.cgColor
                 g.lineWidth = 3.0
                 if blackNote(m) {
                     g.fillColor = colorBlackNote
@@ -346,16 +387,16 @@ class ViewController: UIViewController {
         let textd : CATextLayer = gd.sublayers!.first as! CATextLayer
         textd.fontSize = 28
         textd.string = "▼"
-        textd.foregroundColor = UIColor.blackColor().CGColor
+        textd.foregroundColor = UIColor.black.cgColor
         textd.contentsScale = scale
-        gd.fillColor = UIColor(rgba: "#DFDFDF").CGColor
+        gd.fillColor = UIColor(rgba: "#DFDFDF").cgColor
         let gu=grid![gridHeight-1][1]
         let textu : CATextLayer = gu.sublayers!.first as! CATextLayer
         textu.fontSize = 28
         textu.string = "▲"
-        textu.foregroundColor = UIColor.blackColor().CGColor
+        textu.foregroundColor = UIColor.black.cgColor
         textu.contentsScale = scale
-        gu.fillColor = UIColor(rgba: "#DFDFDF").CGColor
+        gu.fillColor = UIColor(rgba: "#DFDFDF").cgColor
     }
     
     func generateGrid() {
@@ -363,11 +404,11 @@ class ViewController: UIViewController {
         showGrid()
     }
     
-    func midiNote( i : Int, _ j : Int) -> Int {
+    func midiNote( _ i : Int, _ j : Int) -> Int {
         return 3*j+i+baseMidiNote+octaveShift
     }
     
-    func locationToGrid(pt : CGPoint) -> (Int,Int) {
+    func locationToGrid(_ pt : CGPoint) -> (Int,Int) {
         var j : Int = Int((pt.x-2.0)/noteWidth)
         var i : Int = gridHeight-1-Int((pt.y-2.0)/noteHeight)
         i = min(max(0,i),gridHeight-1)
@@ -376,12 +417,14 @@ class ViewController: UIViewController {
             let y = (pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))
             let x = (pt.x-(CGFloat(j)*noteWidth+2.0))
             //print(i,j,x,y)
-            if sqrt((x-0.0)*(x-0.0)+(y-noteHeight)*(y-noteHeight))<gap {
+            let sub = (x-0.0)*(x-0.0)+(y-noteHeight)*(y-noteHeight)
+            let sub2 = (x-noteWidth)*(x-noteWidth)+(y-0.0)*(y-0.0)
+            if sqrt(sub) < gap {
                 j=j-1
-            } else if (abs(x-0.0)+abs(y-0.0))<gap {
+            } else if (abs(x-0.0)+abs(y-0.0)) < gap {
                 j=j-1
                 i=i+1
-            } else if sqrt((x-noteWidth)*(x-noteWidth)+(y-0.0)*(y-0.0))<gap {
+            } else if sqrt(sub2)<gap {
                 i=i+1
             }
             i = min(max(0,i),gridHeight-1)
@@ -390,31 +433,42 @@ class ViewController: UIViewController {
         return (i,j)
     }
     
-    func locationToVel(pt : CGPoint) -> UInt8 {
+    func locationToVel(_ pt : CGPoint) -> UInt8 {
+        
+        var rotY = motionManager.deviceMotion!.userAcceleration.z * motionManager.deviceMotion!.rotationRate.y
+        rotY=min(sqrt(abs(rotY))/0.15,1.0)
+        //var rotY = motionManager.deviceMotion!.rotationRate.z
+        print("rotY",rotY)
+        //rotY=min(sqrt(abs(rotY))/0.1,1.0)
+        
         let i : Int = gridHeight-1-Int((pt.y-2.0)/noteHeight)
         let j : Int = Int((pt.x-2.0)/noteWidth)
         let x = (pt.x-(CGFloat(j)*noteWidth+2.0))
         let y = (pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))
         let c1 = (abs(x-0.0)+abs(y-0.0))<gap
-        let c2 = sqrt((x-noteWidth)*(x-noteWidth)+(y-0.0)*(y-0.0))<gap
+        let sub3 = (x-noteWidth)*(x-noteWidth)+(y-0.0)*(y-0.0)
+        let c2 = sqrt(sub3)<gap
         if c1 || c2 {
             return UInt8(minVel)
         }
         let vel = max(0.0,1.0-(pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))/noteHeight)
-        return UInt8(minVel+(maxVel-minVel)*vel)
+        return UInt8(minVel+(maxVel-minVel)*CGFloat(rotY))
     }
     
     func pressPedal() {
         if autoSustain {
             if !pedalOn {
-                midi.sendBytes([0xB0|midiChannel,0x40,0x40])
+                midi?.sendBytes([0xB0|midiChannel,0x40,0x40])
                 pedalOn = true
-                pedalLabel.hidden = false
+                pedalLabel.isHidden = false
             } else {
-                midi.sendBytes([0xB0|midiChannel,0x40,0x00])
-                pedalLabel.hidden = true
-                midi.sendBytes([0xB0|midiChannel,0x40,0x40])
-                pedalLabel.hidden = false
+                midi?.sendBytes([0xB0|midiChannel,0x40,0x00])
+                pedalLabel.isHidden = true
+                /*let triggerTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.01 * Double(NSEC_PER_SEC)))
+                dispatch_after(triggerTime, dispatch_get_main_queue(), { () -> Void in*/
+                    midi?.sendBytes([0xB0|midiChannel,0x40,0x40])
+                /*})*/
+                pedalLabel.isHidden = false
             }
         }
     }
@@ -422,9 +476,9 @@ class ViewController: UIViewController {
     func releasePedal() {
         if autoSustain {
             if pedalOn {
-                midi.sendBytes([0xB0|midiChannel,0x40,0x00])
+                midi?.sendBytes([0xB0|midiChannel,0x40,0x00])
                 pedalOn = false
-                pedalLabel.hidden = true
+                pedalLabel.isHidden = true
             }
         }
     }
@@ -442,7 +496,7 @@ class ViewController: UIViewController {
             setupNotes()
         }
     }
-    func pressKey(i : Int, _ j : Int, _ vel : UInt8) {
+    func pressKey(_ i : Int, _ j : Int, _ vel : UInt8) {
         if (i>=0 && i<gridHeight) && (j>=0 && j<gridWidth) {
             grid![i][j].opacity = 0.5
         }
@@ -464,7 +518,7 @@ class ViewController: UIViewController {
         midiNoteOn(m, channel: channel, vel)
     }
     
-    func keyChannel(i : Int, _ j : Int) -> UInt8 {
+    func keyChannel(_ i : Int, _ j : Int) -> UInt8 {
         if(i<cornerI && j<cornerJ) {
             return midiBassChannel
         } else {
@@ -472,7 +526,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func releaseKey(i : Int, _ j : Int) {
+    func releaseKey(_ i : Int, _ j : Int) {
         let m = gridNote[i][j]
         gridNote[i][j] = 0
         if (i>=0 && i<gridHeight) && (j>=0 && j<gridWidth) {
@@ -489,19 +543,19 @@ class ViewController: UIViewController {
         }
     }
     
-    func isScaleNote(m : Int) -> Bool {
+    func isScaleNote(_ m : Int) -> Bool {
         return currentScale[(m+(12-currentRoot))%12]
     }
     
-    func midiNoteOn(m : Int, channel : UInt8, _ vel : UInt8) {
+    func midiNoteOn(_ m : Int, channel : UInt8, _ vel : UInt8) {
         //println("midi on: \(midiToName(m)),\(vel)")
-        midi.sendBytes([0x90|channel,UInt8(m+transposition),vel])
+        midi?.sendBytes([0x90|channel,UInt8(m+transposition),vel])
         lastVel = vel
     }
     
-    func midiNoteOff(m : Int, channel : UInt8) {
+    func midiNoteOff(_ m : Int, channel : UInt8) {
         //println("midi off: \(midiToName(m))")
-        midi.sendBytes([0x80|channel,UInt8(m+transposition),0])
+        midi?.sendBytes([0x80|channel,UInt8(m+transposition),0])
     }
     
     
@@ -577,7 +631,7 @@ class ViewController: UIViewController {
             notes.append(midiNote(k.0,k.1))
         }
         notes = listChord(notes)
-        keys.sortInPlace { $0.1 == $1.1 ? $0.0 < $1.0 : $0.1 < $1.1 }
+        keys.sort { $0.1 == $1.1 ? $0.0 < $1.0 : $0.1 < $1.1 }
         var strKeys : String = ""
         let bass = keys[0]
         if (keys[1].0-keys[0].0)>2 {
@@ -674,11 +728,11 @@ class ViewController: UIViewController {
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         bending = false
         for t: NSObject in touches {
             let touch = t as? UITouch
-            let pt = touch!.locationInView(self.view)
+            let pt = touch!.location(in: self.view)
             let (i,j) = locationToGrid(pt)
             let vel = locationToVel(pt)
             activeKeys[touch!]=(i,j)
@@ -688,7 +742,7 @@ class ViewController: UIViewController {
         detectedChord()
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         bending = false
         for t: NSObject in touches {
             let touch = t as? UITouch
@@ -709,10 +763,10 @@ class ViewController: UIViewController {
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if pitchBendRange>0 && activeKeys.count == 1 {
             let touch = touches.first! as UITouch
-            let pt = touch.locationInView(self.view)
+            let pt = touch.location(in: self.view)
             if !bending {
                 bending = true
                 bendingBase = pt.y
@@ -723,8 +777,8 @@ class ViewController: UIViewController {
         var flag = false
         for t: NSObject in touches {
             let touch = t as? UITouch
-            let pt = touch!.locationInView(self.view)
-            let ppt = touch!.previousLocationInView(self.view)
+            let pt = touch!.location(in: self.view)
+            let ppt = touch!.previousLocation(in: self.view)
             let delta = touch!.timestamp-timeKey[touch!]!
             //print(floor(100.0*abs(pt.x-ppt.x)/CGFloat(delta)))
             let (i,j) = locationToGrid(pt)
@@ -745,10 +799,10 @@ class ViewController: UIViewController {
         }
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         //println("CANCEL")
         bending = false
-        for t: NSObject in touches! {
+        for t: NSObject in touches {
             let touch = t as? UITouch
             //let pt = touch!.locationInView(self.view)
             let (i,j) = activeKeys[touch!]!

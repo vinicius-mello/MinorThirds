@@ -37,7 +37,7 @@ class ConfigViewController: UIViewController {
     
     @IBOutlet weak var diagonalSlider: UISlider!
     
-    let rangeVel = RangeSlider(frame: CGRectZero)
+    let rangeVel = RangeSlider(frame: CGRect.zero)
     
     let baseNote : [Int] = [31,33,35,36,38,40,41,43]
     let clr : [String] = ["Rose", "Green", "Blue"]
@@ -45,18 +45,23 @@ class ConfigViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        segHeight.selectedSegmentIndex = gridHeight-7
-        segWidth.selectedSegmentIndex = gridWidth-10
-        segBaseNote.selectedSegmentIndex = baseNote.indexOf(baseMidiNote)!
+        for i in 0...3 {
+        segHeight.setTitle("\(gridHeightBase+i)", forSegmentAt: i)
+            segWidth.setTitle("\(gridWidthBase+i)", forSegmentAt: i)
+        }
+        
+        segHeight.selectedSegmentIndex = gridHeight-gridHeightBase
+        segWidth.selectedSegmentIndex = gridWidth-gridWidthBase
+        segBaseNote.selectedSegmentIndex = baseNote.index(of: baseMidiNote)!
         view.addSubview(rangeVel)
         rangeVel.minimumValue = 0
         rangeVel.maximumValue = 127
         rangeVel.lowerValue = Double(minVel)
         rangeVel.upperValue = Double(maxVel)
-        segColorScheme.selectedSegmentIndex = clr.indexOf(currentColorScheme)!
-        switchIncompleteChords.on = fillIncompletePositions
-        switchSustain.on = autoSustain
-        switchTriads.on = triads
+        segColorScheme.selectedSegmentIndex = clr.index(of: currentColorScheme)!
+        switchIncompleteChords.isOn = fillIncompletePositions
+        switchSustain.isOn = autoSustain
+        switchTriads.isOn = triads
         segAccidental.selectedSegmentIndex = accidental
         labelTranspose.text = "Transpose \(transposition)"
         sliderTranspose.value = Float(transposition)
@@ -80,18 +85,18 @@ class ConfigViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func returnToKeys(sender: AnyObject) {
+    @IBAction func returnToKeys(_ sender: AnyObject) {
         let nav = self.presentingViewController as! UINavigationController
         let main = nav.viewControllers[0] as! ViewController
-        gridHeight = 7+segHeight.selectedSegmentIndex
-        gridWidth = 10+segWidth.selectedSegmentIndex
+        gridHeight = gridHeightBase+segHeight.selectedSegmentIndex
+        gridWidth = gridWidthBase+segWidth.selectedSegmentIndex
         baseMidiNote = baseNote[segBaseNote.selectedSegmentIndex]
         maxVel = CGFloat(rangeVel.upperValue)
         minVel = CGFloat(rangeVel.lowerValue)
         currentColorScheme = clr[segColorScheme.selectedSegmentIndex]
-        fillIncompletePositions = switchIncompleteChords.on
-        autoSustain = switchSustain.on
-        triads = switchTriads.on
+        fillIncompletePositions = switchIncompleteChords.isOn
+        autoSustain = switchSustain.isOn
+        triads = switchTriads.isOn
         
         accidental = segAccidental.selectedSegmentIndex
         transposition = Int(floor(sliderTranspose.value))
@@ -100,44 +105,44 @@ class ConfigViewController: UIViewController {
         midiBassChannel = UInt8(segBassMIDIChannel.selectedSegmentIndex)
         diagonalSlide = CGFloat(diagonalSlider.value)
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setInteger(gridHeight, forKey: "gridHeight")
-        defaults.setInteger(gridWidth, forKey: "gridWidth")
-        defaults.setInteger(baseMidiNote, forKey: "baseMidiNote")
-        defaults.setFloat(Float(minVel), forKey: "minVel")
-        defaults.setFloat(Float(maxVel), forKey: "maxVel")
+        let defaults = UserDefaults.standard
+        defaults.set(gridHeight, forKey: "gridHeight")
+        defaults.set(gridWidth, forKey: "gridWidth")
+        defaults.set(baseMidiNote, forKey: "baseMidiNote")
+        defaults.set(Float(minVel), forKey: "minVel")
+        defaults.set(Float(maxVel), forKey: "maxVel")
         defaults.setValue(currentColorScheme, forKey: "colorScheme")
-        defaults.setBool(autoSustain, forKey: "autoSustain")
-        defaults.setBool(triads, forKey: "triads")
-        defaults.setBool(fillIncompletePositions, forKey: "incompleteChords")
-        defaults.setInteger(accidental, forKey: "accidental")
-        defaults.setInteger(transposition, forKey: "transposition")
-        defaults.setFloat(pitchBendRange, forKey: "pitchBendRange")
-        defaults.setInteger(Int(midiChannel), forKey: "midiChannel")
-        defaults.setInteger(Int(midiBassChannel), forKey: "midiBassChannel")
-        defaults.setFloat(diagonalSlider.value, forKey: "diagonalSlide")
-        defaults.setInteger(cornerI, forKey: "cornerI")
-        defaults.setInteger(cornerJ, forKey: "cornerJ")
+        defaults.set(autoSustain, forKey: "autoSustain")
+        defaults.set(triads, forKey: "triads")
+        defaults.set(fillIncompletePositions, forKey: "incompleteChords")
+        defaults.set(accidental, forKey: "accidental")
+        defaults.set(transposition, forKey: "transposition")
+        defaults.set(pitchBendRange, forKey: "pitchBendRange")
+        defaults.set(Int(midiChannel), forKey: "midiChannel")
+        defaults.set(Int(midiBassChannel), forKey: "midiBassChannel")
+        defaults.set(diagonalSlider.value, forKey: "diagonalSlide")
+        defaults.set(cornerI, forKey: "cornerI")
+        defaults.set(cornerJ, forKey: "cornerJ")
         main.generateGrid()
-        nav.dismissViewControllerAnimated(true, completion: nil)
+        nav.dismiss(animated: true, completion: nil)
     }
    
-    @IBAction func tranposeChange(sender: AnyObject) {
+    @IBAction func tranposeChange(_ sender: AnyObject) {
         let value = Int(floor(sliderTranspose.value))
         labelTranspose.text = "Transpose \(value)"
     }
     
-    @IBAction func pbRangeChange(sender: AnyObject) {
+    @IBAction func pbRangeChange(_ sender: AnyObject) {
         let value = Int(floor(sliderPB.value))
         labelPB.text = "PB Range \(value)"
     }
     
-    @IBAction func cornerIChanged(sender: AnyObject) {
+    @IBAction func cornerIChanged(_ sender: AnyObject) {
         cornerI = Int(floor(sliderCornerI.value*Float(gridHeight)))
         labelCorner.text = "Split Corner (\(cornerI),\(cornerJ))"
     }
     
-    @IBAction func cornerJChanged(sender: AnyObject) {
+    @IBAction func cornerJChanged(_ sender: AnyObject) {
         cornerJ = Int(floor(sliderCornerJ.value*Float(gridWidth)))
         labelCorner.text = "Split Corner (\(cornerI),\(cornerJ))"
     }

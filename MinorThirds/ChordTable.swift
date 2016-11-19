@@ -15,7 +15,7 @@ class ChordType {
         self.symbol = symbol
         self.tones = tones
     }
-    func format(root: Int, bass: Int) -> String {
+    func format(_ root: Int, bass: Int) -> String {
         if root==bass {
             return "\(noteName(root))\(self.symbol)"
         } else {
@@ -617,13 +617,13 @@ class Position {
 
 var allPositions : [Position]! = nil
 
-func parseKeys(keys : String) -> [(Int,Int)] {
+func parseKeys(_ keys : String) -> [(Int,Int)] {
     let woutlast = String(keys.characters.dropLast())
     let woutfirst = String(woutlast.characters.dropFirst())
-    let akeys = woutfirst.componentsSeparatedByString(")(")
+    let akeys = woutfirst.components(separatedBy: ")(")
     var result : [(Int,Int)] = []
     for i in akeys {
-        let p=i.componentsSeparatedByString(",")
+        let p=i.components(separatedBy: ",")
         let pa : (Int,Int) = (Int(p[0])!,Int(p[1])!)
         result.append(pa)
     }
@@ -642,7 +642,7 @@ func fillAllPositions() -> [Position] {
     for (k,t) in incompletePositionTable {
         lallPositions.append(Position(chord: t.0, keys: parseKeys(k), extraKeys: t.2, root: t.1))
     }
-    lallPositions.sortInPlace { $0.chord.symbol < $1.chord.symbol }
+    lallPositions.sort { $0.chord.symbol < $1.chord.symbol }
     return lallPositions
 }
 
@@ -656,6 +656,8 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,7,10,17" : (C47,0),
     "0,10,17,19" : (C47,0),
     "0,5,10" : (C47,0),
+    "0,5,7,10" : (C47,0),
+    "0,5,10,19" : (C47,0),
     "0,10,14,17,21" : (C47913,0),
     "0,5,10,14,21" : (C47913,0),
     "0,1,5,10" : (C47b9,0),
@@ -681,8 +683,11 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,5,8,10" : (C69,2),
     "0,5,9,14,19" : (C69,1),
     "0,9,14,16" : (C69,0),
+    "0,4,7,9,14" : (C69,0),
     "0,9,14,17,19" : (C69,3),
     "0,9,14,16,18" : (C69a11,0),
+    "0,4,9,14,18" : (C69a11,0),
+    "0,4,7,9,14,18" : (C69a11,0),
     "0,10,16" : (C7,0),
     "0,10,16,19" : (C7,0),
     "0,4,10" : (C7,0),
@@ -698,10 +703,13 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,6,8" : (C7,2),
     "0,6,8,15" : (C7,2),
     "0,6,9,14" : (C7,3),
+    "0,9,18,26" : (C7,3),
     "0,8,15,18" : (C7,1),
     "0,8,18" : (C7,1),
     "0,9,14,18" : (C7,2),
     "0,9,15,17" : (C7,3),
+    "0,6,14" : (C7,2),
+    
     "0,10,17,21" : (C71113,0),
     
     "0,10,16,21" : (C713,0),
@@ -711,6 +719,8 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,7,10,16,21" : (C713,0),
     "0,10,14,17" : (C749,0),
     "0,5,10,14" : (C749,0),
+    "0,2,5,10" : (C749,0),
+    "0,7,14,17,22": (C749,0),
     "0,10,14,16" : (C79,0),
     "0,4,10,14" : (C79,0),
     "0,4,7,10,14" : (C79,0),
@@ -726,12 +736,17 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,5,9,16" : (C7M,1),
     "0,7,11,16" : (C7M,0),
     "0,8,15,19" : (C7M,1),
+    "0,8,19" : (C7M,1),
     "0,9,16,17" : (C7M,3),
     "0,4,9,11" : (C7M6,0),
     "0,9,11,16" : (C7M6,0),
     "0,9,16,23" : (C7M6,0),
     "0,4,9,11,14" : (C7M69,0),
     "0,9,11,14,16" : (C7M69,0),
+    "0,4,9,14,23" : (C7M69,0),
+    "0,4,7,9,11,14" : (C7M69,0),
+    "0,4,9,14,19,23" : (C7M69,0),
+    "0,4,9,19,23,26" : (C7M69,0),
     "0,11,14,16" : (C7M9,0),
     "0,4,11,14" : (C7M9,0),
     "0,4,7,11,14" : (C7M9,0),
@@ -752,10 +767,14 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,10,16,18,21" : (C7a1113,0),
     "0,4,8,10" : (C7a5,0),
     "0,8,10,16" : (C7a5,0),
+    "0,6,10,14" : (C7a5,3),
+    "0,6,14,22" : (C7a5,2),
+    "0,2,6,10" : (C7a5,1),
     "0,4,8,10,14" : (C7a59,0),
     "0,8,10,14,16" : (C7a59,0),
     "0,8,14,16,22" : (C7a59,0),
     "0,4,8,10,15" : (C7a5a9,0),
+    "0,6,10,14,17" : (C7a5a9,3),
     "0,4,8,10,13" : (C7a5b9,0),
     "0,8,10,13,16" : (C7a5b9,0),
     "0,4,10,15" : (C7a9,0),
@@ -803,10 +822,10 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,8" : (CM,1),
     "0,8,13,17" : (CM,2),
     "0,8,15" : (CM,1),
-    "0,8,16" : (CM,2),
     "0,9,17" : (CM,2),
     "0,11,19,26" : (CM,2),
     "0,4,8" : (Ca5,0),
+    "0,8,16" : (Ca5,0),
     "0,3,6,9" : (Cdim,0),
     "0,3,9,18" : (Cdim,0),
     "0,6,15,21" : (Cdim,0),
@@ -852,8 +871,14 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,9,19" : (Cm7,1),
     "0,10,15,17" : (Cm711,0),
     "0,3,10,17" : (Cm711,0),
+    "0,5,10,15,19" : (Cm711,0),
+    "0,5,10,15" : (Cm711,0),
+    "0,3,7,10,17" : (Cm711,0),
+    "0,3,10,17,19" : (Cm711,0),
     "0,3,10,14" : (Cm79,0),
+    "0,3,7,10,14" : (Cm79,0),
     "0,3,10,14,17" : (Cm7911,0),
+    "0,3,7,10,14,17" : (Cm7911,0),
     "0,11,15,19" : (Cm7M,0),
     "0,3,7,11" : (Cm7M,0),
     "0,7,11,15" : (Cm7M,0),
@@ -867,10 +892,12 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,3,7,11,14,17" : (Cm7M911,0),
     "0,10,15,18" : (Cm7b5,0),
     "0,3,6,10" : (Cm7b5,0),
+    "0,6,10,15" : (Cm7b5,0),
     "0,3,6,10,14" : (Cm7b59,0),
     "0,10,13,15" : (Cm7b9,0),
     "0,3,10,13" : (Cm7b9,0),
     "0,3,7,10,13" : (Cm7b9,0),
+    "0,10,15,25" : (Cm7b9,0),
     "0,3,14,19" : (Cm9,0),
     "0,3,7,14" : (Cm9,0),
     "0,5,14,16" : (Cm9,2),
@@ -882,10 +909,11 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,6,9" : (Cmb5,1),
     "0,3,7,8" : (Cmb6,0),
 ]
-func listChord(var notes: [Int]) -> [Int] {
-    notes.sortInPlace()
+func listChord(_ notes: [Int]) -> [Int] {
+    var notes = notes
+    notes.sort()
     let firstNote = notes.first
-    var pitchClass = [Bool](count: 12, repeatedValue: false)
+    var pitchClass = [Bool](repeating: false, count: 12)
     var chordNotes : [Int] = []
     var pn : Int = 0
     for i in notes {
@@ -909,7 +937,7 @@ func listChord(var notes: [Int]) -> [Int] {
     return chordNotes
 }
 
-func notesToString(notes : [Int]) -> String {
+func notesToString(_ notes : [Int]) -> String {
     var s : String = ""
     for i in notes {
         if i>0 {
@@ -926,7 +954,7 @@ func genChordTable() {
     for (s,_) in chordTable {
         l.append(s)
     }
-    l.sortInPlace { (a,b) -> Bool in
+    l.sort { (a,b) -> Bool in
         (chordTable[a]!.0.name < chordTable[b]!.0.name) || ((chordTable[a]!.0.name == chordTable[b]!.0.name) && a < b)
     }
     for s in l {

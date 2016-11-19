@@ -40,7 +40,7 @@ class DetailViewController: UIViewController {
         var index : Int = 0
         for k in position.keys {
             let g = keys[index]
-            g.frame = CGRectMake(CGFloat(k.1)*size+size,  400-CGFloat(k.0)*size, size, size)
+            g.frame = CGRect(x: CGFloat(k.1)*size+size,  y: 400-CGFloat(k.0)*size, width: size, height: size)
             let m = midiNoteRelative(position.keys[position.root], key: k)
             g.string = midiToName(m)
             g.fontSize = 20
@@ -57,14 +57,14 @@ class DetailViewController: UIViewController {
             }
             
             g.borderWidth = 1.0
-            g.borderColor = UIColor.blackColor().CGColor
+            g.borderColor = UIColor.black.cgColor
             g.alignmentMode = kCAAlignmentCenter
-            g.hidden = false
+            g.isHidden = false
             index = index + 1
         }
         for k in position.extraKeys {
             let g = keys[index]
-            g.frame = CGRectMake(CGFloat(k.1)*size+size,  400-CGFloat(k.0)*size, size, size)
+            g.frame = CGRect(x: CGFloat(k.1)*size+size,  y: 400-CGFloat(k.0)*size, width: size, height: size)
             let m = midiNoteRelative(position.keys[position.root], key: k)
             g.string = midiToName(m)+"\nauto"
             g.fontSize = 20
@@ -79,13 +79,13 @@ class DetailViewController: UIViewController {
                 g.foregroundColor = colorWhiteNoteFG
             }
             g.borderWidth = 4.0
-            g.borderColor = UIColor.blackColor().CGColor
+            g.borderColor = UIColor.black.cgColor
             g.alignmentMode = kCAAlignmentCenter
-            g.hidden = false
+            g.isHidden = false
             index = index + 1
         }
         for i in index..<keys.count {
-            keys[i].hidden = true
+            keys[i].isHidden = true
         }
     }
     
@@ -97,7 +97,7 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         position = allPositions[0]
         //println(masterViewController)
         masterViewController?.delegate = self
@@ -108,9 +108,9 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func returnToKeys(sender: AnyObject) {
+    @IBAction func returnToKeys(_ sender: AnyObject) {
         let nav = self.presentingViewController
-        nav!.dismissViewControllerAnimated(true, completion: nil)
+        nav!.dismiss(animated: true, completion: nil)
     }
 
     /*
@@ -126,7 +126,7 @@ class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: PositionSelectionDelegate {
-    func positionSelected(newPosition: Position) {
+    func positionSelected(_ newPosition: Position) {
         position = newPosition
     }
 }

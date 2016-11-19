@@ -8,14 +8,14 @@
 
 import UIKit
 
-func midiNoteRelative(root : (Int,Int), key : (Int,Int) ) -> Int {
+func midiNoteRelative(_ root : (Int,Int), key : (Int,Int) ) -> Int {
     let rootm = 3*root.1+root.0
     let keym = 3*key.1+key.0
     return keym+(60-rootm)
 }
 
 protocol PositionSelectionDelegate: class {
-    func positionSelected(newPosition: Position)
+    func positionSelected(_ newPosition: Position)
 }
 
 var masterViewController : MasterViewController? = nil
@@ -37,8 +37,8 @@ class MasterViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
-    override func viewDidAppear(animated: Bool) {
-        self.tableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: UITableViewScrollPosition.None)
+    override func viewDidAppear(_ animated: Bool) {
+        self.tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: UITableViewScrollPosition.none)
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,31 +48,31 @@ class MasterViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return allPositions.count
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) 
 
         // Configure the cell...
-        let position = allPositions[indexPath.row]
+        let position = allPositions[(indexPath as NSIndexPath).row]
         cell.textLabel?.text = position.chord.format(60, bass: midiNoteRelative( position.keys[position.root], key: (0,0) ))
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedPosition = allPositions[indexPath.row]
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedPosition = allPositions[(indexPath as NSIndexPath).row]
         self.delegate?.positionSelected(selectedPosition)
     }
 
