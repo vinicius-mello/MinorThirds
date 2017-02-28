@@ -175,13 +175,13 @@ class ViewController: UIViewController {
     var activeNotes : [Bool] = [Bool](repeating: false, count: 128)
     var gridNote : [[Int]]! = nil
     let scale : CGFloat = (UIScreen.main.scale)
-    var motionManager : CMMotionManager = CMMotionManager()
+    //var motionManager : CMMotionManager = CMMotionManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //genChordTable()
 
-        motionManager.startDeviceMotionUpdates()
+        //motionManager.startDeviceMotionUpdates()
         
         UIApplication.shared.isStatusBarHidden = true
         let defaults = UserDefaults.standard
@@ -435,14 +435,28 @@ class ViewController: UIViewController {
     
     func locationToVel(_ pt : CGPoint) -> UInt8 {
         
-        var rotY = motionManager.deviceMotion!.userAcceleration.z * motionManager.deviceMotion!.rotationRate.y
-        rotY=min(sqrt(abs(rotY))/0.15,1.0)
+        //var zzz = motionManager.deviceMotion!.userAcceleration.z
+        /*var yyy = motionManager.deviceMotion!.rotationRate.y
+        var xxx = motionManager.deviceMotion!.rotationRate.x
+        
+        var aaa = abs(xxx)+abs(yyy)+abs(zzz)
+        print("aaa",1000*aaa)
+        print("yyy",yyy)
+        print("xxx",xxx)
+        print("\n")
+        aaa = min(100.0*abs(zzz)/20.0,1.0)
+        print("nzzz",zzz)*/
+        //print("zzz",zzz)
+        //zzz = min(100.0*abs(zzz)/20.0,1.0)
+        let yy = 1.0-((pt.y-2.0)/noteHeight)/CGFloat(gridHeight)
+        
         //var rotY = motionManager.deviceMotion!.rotationRate.z
-        print("rotY",rotY)
+        //print("rotY",rotY)
         //rotY=min(sqrt(abs(rotY))/0.1,1.0)
         
         let i : Int = gridHeight-1-Int((pt.y-2.0)/noteHeight)
         let j : Int = Int((pt.x-2.0)/noteWidth)
+        
         let x = (pt.x-(CGFloat(j)*noteWidth+2.0))
         let y = (pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))
         let c1 = (abs(x-0.0)+abs(y-0.0))<gap
@@ -452,7 +466,7 @@ class ViewController: UIViewController {
             return UInt8(minVel)
         }
         let vel = max(0.0,1.0-(pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))/noteHeight)
-        return UInt8(minVel+(maxVel-minVel)*CGFloat(rotY))
+        return UInt8(minVel+(maxVel-minVel)*CGFloat(vel))
     }
     
     func pressPedal() {
