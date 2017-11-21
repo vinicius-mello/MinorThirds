@@ -25,6 +25,9 @@ class ConfigViewController: UIViewController {
     
     @IBOutlet weak var segBassMIDIChannel: UISegmentedControl!
     
+    @IBOutlet weak var segCC: UISegmentedControl!
+    @IBOutlet weak var labelCC: UILabel!
+    
     @IBOutlet weak var sliderTranspose: UISlider!
     @IBOutlet weak var labelTranspose: UILabel!
     
@@ -36,6 +39,11 @@ class ConfigViewController: UIViewController {
     @IBOutlet weak var sliderCornerJ: UISlider!
     
     @IBOutlet weak var diagonalSlider: UISlider!
+    
+    @IBOutlet weak var switchCCVel: UISwitch!
+    
+    @IBOutlet weak var sliderGamma: UISlider!
+    @IBOutlet weak var labelGamma: UILabel!
     
     let rangeVel = RangeSlider(frame: CGRect.zero)
     
@@ -53,17 +61,24 @@ class ConfigViewController: UIViewController {
         segHeight.selectedSegmentIndex = gridHeight-gridHeightBase
         segWidth.selectedSegmentIndex = gridWidth-gridWidthBase
         segBaseNote.selectedSegmentIndex = baseNote.index(of: baseMidiNote)!
+        segCC.selectedSegmentIndex = CC
+        labelCC.text = "CC#\(CCS[CC]) -> Velocity"
         view.addSubview(rangeVel)
         rangeVel.minimumValue = 0
         rangeVel.maximumValue = 127
         rangeVel.lowerValue = Double(minVel)
         rangeVel.upperValue = Double(maxVel)
+        sliderGamma.value = Float(gamma)
         segColorScheme.selectedSegmentIndex = clr.index(of: currentColorScheme)!
         switchIncompleteChords.isOn = fillIncompletePositions
         switchSustain.isOn = autoSustain
         switchTriads.isOn = triads
+        switchCCVel.isOn = CCVel
         segAccidental.selectedSegmentIndex = accidental
         labelTranspose.text = "Transpose \(transposition)"
+        let gammaStr = String(format: "%.01f", gamma)
+        labelGamma.text = "γ = \(gammaStr)"
+
         sliderTranspose.value = Float(transposition)
         sliderPB.value = pitchBendRange
         labelPB.text = "PB Range \(Int(pitchBendRange))"
@@ -93,11 +108,14 @@ class ConfigViewController: UIViewController {
         baseMidiNote = baseNote[segBaseNote.selectedSegmentIndex]
         maxVel = CGFloat(rangeVel.upperValue)
         minVel = CGFloat(rangeVel.lowerValue)
+        gamma = CGFloat(sliderGamma.value)
         currentColorScheme = clr[segColorScheme.selectedSegmentIndex]
         fillIncompletePositions = switchIncompleteChords.isOn
         autoSustain = switchSustain.isOn
         triads = switchTriads.isOn
-        
+        CCVel = switchCCVel.isOn
+        CC = segCC.selectedSegmentIndex
+        midi!.setExprCC(CCS[CC])
         accidental = segAccidental.selectedSegmentIndex
         transposition = Int(floor(sliderTranspose.value))
         pitchBendRange = floor(sliderPB.value)
@@ -111,8 +129,11 @@ class ConfigViewController: UIViewController {
         defaults.set(baseMidiNote, forKey: "baseMidiNote")
         defaults.set(Float(minVel), forKey: "minVel")
         defaults.set(Float(maxVel), forKey: "maxVel")
+        defaults.set(Float(gamma), forKey: "gamma")
         defaults.setValue(currentColorScheme, forKey: "colorScheme")
         defaults.set(autoSustain, forKey: "autoSustain")
+        defaults.set(CCVel, forKey: "CCVel")
+        defaults.set(Int(CC), forKey: "CC")
         defaults.set(triads, forKey: "triads")
         defaults.set(fillIncompletePositions, forKey: "incompleteChords")
         defaults.set(accidental, forKey: "accidental")
@@ -140,6 +161,16 @@ class ConfigViewController: UIViewController {
     @IBAction func cornerIChanged(_ sender: AnyObject) {
         cornerI = Int(floor(sliderCornerI.value*Float(gridHeight)))
         labelCorner.text = "Split Corner (\(cornerI),\(cornerJ))"
+    }
+    
+    @IBAction func gammaChanged(_ sender: Any) {
+        gamma = CGFloat(sliderGamma.value)
+        let gammaStr = String(format: "%.01f", gamma)
+        labelGamma.text = "γ: \(gammaStr)"
+    }
+    
+    @IBAction func segCCChanged(_ sender: Any) {
+        labelCC.text = "CC#\(CCS[segCC.selectedSegmentIndex]) -> Velocity"
     }
     
     @IBAction func cornerJChanged(_ sender: AnyObject) {

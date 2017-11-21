@@ -18,6 +18,7 @@
     MIDIClientRef      virtualMidiClient;
     MIDIPortRef        outPort;
     MIDIEndpointRef    midiOut;
+    MIDIEndpointRef    midiIn;
     MIDINetworkSession* networkSession;
 }
 @property (copy) NSString *name;
@@ -25,6 +26,9 @@
 - (id)init:(NSString *)aName;
 - (void)sendBytes:(const UInt8*)bytes;
 - (void)sendBytes:(const UInt8*)bytes size:(UInt32)size;
+- (double)getExpression;
+- (void)reconnect;
+- (void)setExprCC:(const UInt8)cc;
 @end
 
 #endif

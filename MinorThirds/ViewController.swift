@@ -100,6 +100,10 @@ var maxVel : CGFloat = 110
 var fillIncompletePositions : Bool = true
 var autoSustain : Bool = true
 var triads : Bool = false
+var CCVel : Bool = false
+var gamma : CGFloat = 2.0
+let CCS : [UInt8] = [2,4,11,21]
+var CC : Int = 2
 var currentColorScheme : String = "Rose"
 var accidental : Int = 0
 var transposition : Int = 0
@@ -165,6 +169,8 @@ class ViewController: UIViewController {
     var currentChord : ChordType? = nil
     var currentRoot : Int = 0
     var currentBass : Int = 0
+    var bassCount : Int = 0
+    var pendingBass : Int = 0
     var bassNote : Int = 0
     var currentScale : [Bool] = allNotes
     var chordLabel : CATextLayer = CATextLayer()
@@ -209,11 +215,17 @@ class ViewController: UIViewController {
         if let defaultMaxVel = defaults.object(forKey: "maxVel") as? Float {
             maxVel = CGFloat(defaultMaxVel)
         }
+        if let defaultGamma = defaults.object(forKey: "gamma") as? Float {
+            gamma = CGFloat(defaultGamma)
+        }
         if let defaultColorScheme = defaults.object(forKey: "colorScheme") as? String {
             currentColorScheme = defaultColorScheme
         }
         if let defaultAutoSustain = defaults.object(forKey: "autoSustain") as? Bool {
             autoSustain = defaultAutoSustain
+        }
+        if let defaultCCVel = defaults.object(forKey: "CCVel") as? Bool {
+            CCVel = defaultCCVel
         }
         if let defaultTriads = defaults.object(forKey: "triads") as? Bool {
             triads = defaultTriads
@@ -233,6 +245,9 @@ class ViewController: UIViewController {
         if let defaultMidiChannel = defaults.object(forKey: "midiChannel") as? Int {
             midiChannel = UInt8(defaultMidiChannel)
         }
+        if let defaultCC = defaults.object(forKey: "CC") as? Int {
+            CC = defaultCC
+        }
         if let defaultMidiBassChannel = defaults.object(forKey: "midiBassChannel") as? Int {
             midiBassChannel = UInt8(defaultMidiBassChannel)
         }
@@ -245,6 +260,7 @@ class ViewController: UIViewController {
         if let defaultCornerJ = defaults.object(forKey: "cornerJ") as? Int {
             cornerJ = defaultCornerJ
         }
+        midi!.setExprCC(CCS[CC])
         setupGrid()
         showGrid()
         setupNotes()
@@ -435,24 +451,7 @@ class ViewController: UIViewController {
     
     func locationToVel(_ pt : CGPoint) -> UInt8 {
         
-        //var zzz = motionManager.deviceMotion!.userAcceleration.z
-        /*var yyy = motionManager.deviceMotion!.rotationRate.y
-        var xxx = motionManager.deviceMotion!.rotationRate.x
-        
-        var aaa = abs(xxx)+abs(yyy)+abs(zzz)
-        print("aaa",1000*aaa)
-        print("yyy",yyy)
-        print("xxx",xxx)
-        print("\n")
-        aaa = min(100.0*abs(zzz)/20.0,1.0)
-        print("nzzz",zzz)*/
-        //print("zzz",zzz)
-        //zzz = min(100.0*abs(zzz)/20.0,1.0)
         let yy = 1.0-((pt.y-2.0)/noteHeight)/CGFloat(gridHeight)
-        
-        //var rotY = motionManager.deviceMotion!.rotationRate.z
-        //print("rotY",rotY)
-        //rotY=min(sqrt(abs(rotY))/0.1,1.0)
         
         let i : Int = gridHeight-1-Int((pt.y-2.0)/noteHeight)
         let j : Int = Int((pt.x-2.0)/noteWidth)
@@ -465,7 +464,11 @@ class ViewController: UIViewController {
         if c1 || c2 {
             return UInt8(minVel)
         }
-        let vel = max(0.0,1.0-(pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))/noteHeight)
+        var vel = max(0.0,1.0-(pt.y-(CGFloat(gridHeight-1-i)*noteHeight+2.0))/noteHeight)
+        if(CCVel) {
+            vel = CGFloat(midi!.getExpression())
+            vel = exp(gamma*log(vel))
+        }
         return UInt8(minVel+(maxVel-minVel)*CGFloat(vel))
     }
     
@@ -521,6 +524,13 @@ class ViewController: UIViewController {
             octaveUp()
             return
         }
+        if i<cornerI && j<cornerJ {
+            if pendingBass>0 {
+                midiNoteOff(pendingBass, channel: midiBassChannel)
+                pendingBass = 0
+            }
+            bassCount = bassCount + 1
+        }
         let m = midiNote(i, j)
         gridNote[i][j] = m
         let channel = keyChannel(i,j)
@@ -546,6 +556,13 @@ class ViewController: UIViewController {
         if (i>=0 && i<gridHeight) && (j>=0 && j<gridWidth) {
             if i<cornerI && j<cornerJ {
                 grid![i][j].opacity = 0.7
+                bassCount = bassCount - 1
+                if bassCount==0 && !activeKeys.isEmpty {
+                    pendingBass = m
+                    return
+                } else {
+                    pendingBass = 0
+                }
             } else {
                 grid![i][j].opacity = 1.0
             }
