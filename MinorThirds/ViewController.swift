@@ -261,6 +261,11 @@ class ViewController: UIViewController {
             cornerJ = defaultCornerJ
         }
         midi!.setExprCC(CCS[CC])
+        if #available(iOS 11.0, *) {
+            self.setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
+        } else {
+            // Fallback on earlier versions
+        }
         setupGrid()
         showGrid()
         setupNotes()
