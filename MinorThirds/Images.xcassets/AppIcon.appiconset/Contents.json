@@ -51,6 +51,12 @@
       "idiom" : "ipad",
       "filename" : "MinorThirdsIcon167.png",
       "scale" : "2x"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "MinorThirdsIcon1024.png",
+      "scale" : "1x"
     }
   ],
   "info" : {
