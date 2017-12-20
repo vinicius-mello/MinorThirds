@@ -183,6 +183,18 @@ class ViewController: UIViewController {
     let scale : CGFloat = (UIScreen.main.scale)
     //var motionManager : CMMotionManager = CMMotionManager()
     
+    override func preferredScreenEdgesDeferringSystemGestures() -> UIRectEdge {
+        return [.all]
+    }
+    
+    private func updateDeferringSystemGestures() {
+        if #available(iOS 11.0, *) {
+            setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
+        } else {
+            setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //genChordTable()
@@ -261,11 +273,7 @@ class ViewController: UIViewController {
             cornerJ = defaultCornerJ
         }
         midi!.setExprCC(CCS[CC])
-        if #available(iOS 11.0, *) {
-            self.setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
-        } else {
-            // Fallback on earlier versions
-        }
+        updateDeferringSystemGestures()
         setupGrid()
         showGrid()
         setupNotes()
