@@ -80,7 +80,7 @@ void MyMIDINotifyProc (const MIDINotification  *message, void *refCon) {
         ItemCount iSrc;
         for (iSrc=0; iSrc<nSrcs; iSrc++) {
             MIDIEndpointRef src = MIDIGetSource(iSrc);
-            if (src != NULL) {
+            if (src != 0) {
                 NSLog(@"  Source: %@", getDisplayName(src));
                 MIDIPortConnectSource(midiIn, src, NULL);
             }
@@ -106,7 +106,7 @@ void MyMIDINotifyProc (const MIDINotification  *message, void *refCon) {
     ItemCount iSrc;
     for (iSrc=0; iSrc<nSrcs; iSrc++) {
         MIDIEndpointRef src = MIDIGetSource(iSrc);
-        if (src != NULL) {
+        if (src != 0) {
             if(![getDisplayName(src) isEqualToString:_name]) {
             NSLog(@" Reconnect Source: %@", getDisplayName(src));
 //            MIDIPortDisconnectSource(midiIn, src);

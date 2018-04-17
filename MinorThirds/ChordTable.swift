@@ -249,7 +249,7 @@ let positionTable : [String : (ChordType,Int)] = [
     "(0,0)(0,1)(0,2)(1,3)" : (Cm7b5,0),
     //    "(0,0)(0,5)(0,6)(1,7)" : (Cm7b5,0),
     "(0,0)(1,3)(0,5)(0,6)" : (Cm7b5,0),
-    
+
     "(0,0)(0,1)(1,3)(2,4)" : (Cm79,0),
     
     "(0,0)(1,3)(1,5)(0,7)" : (C713,0),
@@ -618,8 +618,8 @@ class Position {
 var allPositions : [Position]! = nil
 
 func parseKeys(_ keys : String) -> [(Int,Int)] {
-    let woutlast = String(keys.characters.dropLast())
-    let woutfirst = String(woutlast.characters.dropFirst())
+    let woutlast = String(keys.dropLast())
+    let woutfirst = String(woutlast.dropFirst())
     let akeys = woutfirst.components(separatedBy: ")(")
     var result : [(Int,Int)] = []
     for i in akeys {
@@ -710,6 +710,8 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,9,14,18" : (C7,2),
     "0,9,15,17" : (C7,3),
     "0,6,14" : (C7,2),
+    "0,11,17,19" : (C7,3),
+    "0,2,9,18" : (C7,1),
     
     "0,10,17,21" : (C71113,0),
     
@@ -908,6 +910,7 @@ let chordTable : [ String : (ChordType,Int)] = [
     "0,10,15,18" : (Cm7b5,0),
     "0,3,6,10" : (Cm7b5,0),
     "0,6,10,15" : (Cm7b5,0),
+    "0,8,14,17" : (Cm7b5,2),
     "0,3,6,10,14" : (Cm7b59,0),
     "0,10,13,15" : (Cm7b9,0),
     "0,3,10,13" : (Cm7b9,0),

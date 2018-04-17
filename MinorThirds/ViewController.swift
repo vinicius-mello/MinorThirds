@@ -464,7 +464,7 @@ class ViewController: UIViewController {
     
     func locationToVel(_ pt : CGPoint) -> UInt8 {
         
-        let yy = 1.0-((pt.y-2.0)/noteHeight)/CGFloat(gridHeight)
+        _ = 1.0-((pt.y-2.0)/noteHeight)/CGFloat(gridHeight)
         
         let i : Int = gridHeight-1-Int((pt.y-2.0)/noteHeight)
         let j : Int = Int((pt.x-2.0)/noteWidth)
@@ -822,8 +822,8 @@ class ViewController: UIViewController {
         for t: NSObject in touches {
             let touch = t as? UITouch
             let pt = touch!.location(in: self.view)
-            let ppt = touch!.previousLocation(in: self.view)
-            let delta = touch!.timestamp-timeKey[touch!]!
+            _ = touch!.previousLocation(in: self.view)
+            _ = touch!.timestamp-timeKey[touch!]!
             //print(floor(100.0*abs(pt.x-ppt.x)/CGFloat(delta)))
             let (i,j) = locationToGrid(pt)
             let (ai,aj) = activeKeys[touch!]!
