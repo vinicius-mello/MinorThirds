@@ -194,6 +194,10 @@ class ViewController: UIViewController {
             setNeedsStatusBarAppearanceUpdate()
         }
     }
+
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -201,7 +205,7 @@ class ViewController: UIViewController {
 
         //motionManager.startDeviceMotionUpdates()
         
-        UIApplication.shared.isStatusBarHidden = true
+//        UIApplication.shared.isStatusBarHidden = true
         let defaults = UserDefaults.standard
         let w: Double = Double(UIScreen.main.bounds.width)
         let h: Double = Double(UIScreen.main.bounds.height)
