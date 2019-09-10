@@ -38,7 +38,7 @@ class MasterViewController: UITableViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        self.tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: UITableViewScrollPosition.none)
+        self.tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
     }
     
     override func didReceiveMemoryWarning() {

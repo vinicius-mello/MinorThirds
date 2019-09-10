@@ -60,7 +60,7 @@ class ConfigViewController: UIViewController {
         
         segHeight.selectedSegmentIndex = gridHeight-gridHeightBase
         segWidth.selectedSegmentIndex = gridWidth-gridWidthBase
-        segBaseNote.selectedSegmentIndex = baseNote.index(of: baseMidiNote)!
+        segBaseNote.selectedSegmentIndex = baseNote.firstIndex(of: baseMidiNote)!
         segCC.selectedSegmentIndex = CC
         labelCC.text = "CC#\(CCS[CC]) -> Velocity"
         view.addSubview(rangeVel)
@@ -69,7 +69,7 @@ class ConfigViewController: UIViewController {
         rangeVel.lowerValue = Double(minVel)
         rangeVel.upperValue = Double(maxVel)
         sliderGamma.value = Float(gamma)
-        segColorScheme.selectedSegmentIndex = clr.index(of: currentColorScheme)!
+        segColorScheme.selectedSegmentIndex = clr.firstIndex(of: currentColorScheme)!
         switchIncompleteChords.isOn = fillIncompletePositions
         switchSustain.isOn = autoSustain
         switchTriads.isOn = triads

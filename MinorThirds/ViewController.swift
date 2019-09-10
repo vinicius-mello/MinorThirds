@@ -183,7 +183,7 @@ class ViewController: UIViewController {
     let scale : CGFloat = (UIScreen.main.scale)
     //var motionManager : CMMotionManager = CMMotionManager()
     
-    override func preferredScreenEdgesDeferringSystemGestures() -> UIRectEdge {
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
         return [.all]
     }
     
@@ -289,7 +289,7 @@ class ViewController: UIViewController {
         chordLabelShadow.fontSize = 108
         chordLabelShadow.font = "Verdana" as CFTypeRef?
         chordLabelShadow.string = ""
-        chordLabelShadow.alignmentMode = kCAAlignmentLeft
+        chordLabelShadow.alignmentMode = CATextLayerAlignmentMode.left
         chordLabelShadow.backgroundColor = UIColor.clear.cgColor
         chordLabelShadow.foregroundColor = UIColor.black.cgColor
         chordLabelShadow.opacity = 0.9
@@ -299,7 +299,7 @@ class ViewController: UIViewController {
         chordLabel.fontSize = 108
         chordLabel.font = "Verdana" as CFTypeRef?
         chordLabel.string = ""
-        chordLabel.alignmentMode = kCAAlignmentLeft
+        chordLabel.alignmentMode = CATextLayerAlignmentMode.left
         chordLabel.backgroundColor = UIColor.clear.cgColor
         chordLabel.foregroundColor = UIColor.white.cgColor
         chordLabel.opacity = 1.0
@@ -399,7 +399,7 @@ class ViewController: UIViewController {
                 text.font = "Verdana" as CFTypeRef?
                 text.backgroundColor = UIColor.clear.cgColor
                 text.frame = CGRect(x: 0, y: gap, width: noteWidth, height: noteHeight-gap)
-                text.alignmentMode = kCAAlignmentCenter
+                text.alignmentMode = CATextLayerAlignmentMode.center
                 text.contentsScale = scale
                 g.strokeColor = UIColor.black.cgColor
                 g.lineWidth = 3.0

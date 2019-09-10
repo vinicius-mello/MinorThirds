@@ -58,7 +58,7 @@ class DetailViewController: UIViewController {
             
             g.borderWidth = 1.0
             g.borderColor = UIColor.black.cgColor
-            g.alignmentMode = kCAAlignmentCenter
+            g.alignmentMode = CATextLayerAlignmentMode.center
             g.isHidden = false
             index = index + 1
         }
@@ -80,7 +80,7 @@ class DetailViewController: UIViewController {
             }
             g.borderWidth = 4.0
             g.borderColor = UIColor.black.cgColor
-            g.alignmentMode = kCAAlignmentCenter
+            g.alignmentMode = CATextLayerAlignmentMode.center
             g.isHidden = false
             index = index + 1
         }
